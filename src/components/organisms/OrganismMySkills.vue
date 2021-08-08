@@ -20,9 +20,10 @@
           </v-btn>
           <v-btn
             color="primary"
-            class="ml-2"
+            class="ml-2 text-none"
+            style="textButton"
           >
-            Criar sua própria skill
+            Crie sua própria skill
           </v-btn>
         </div>
       </v-col>
@@ -60,6 +61,15 @@ export default {
 };
 </script>
 <style scoped>
+.textButton{
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: center;
+
+}
 .textTitle{
   font-size: 35px;
   font-style: normal;
