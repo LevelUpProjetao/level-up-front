@@ -1,7 +1,9 @@
 <template>
-  <v-app>
+  <v-app style="background: #E5E5E5">
     <OrganismHeader />
-    <v-main>
+    <v-main
+      class="mx-16 mt-10"
+    >
       <router-view />
     </v-main>
   </v-app>
