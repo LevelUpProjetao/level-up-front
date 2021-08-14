@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="mx-0 mb-10"
+    class="mx-0 mb-5"
     max-width="286"
     max-height="105"
   >
