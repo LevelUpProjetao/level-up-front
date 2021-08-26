@@ -15,7 +15,7 @@
         <div>
           <v-btn
             text
-            :to="{ name: 'user-skills'}"
+            :to="{ name: 'collaborator-skills'}"
           >
             <span class="textSeeMore text-none">Ver todas</span>
           </v-btn>

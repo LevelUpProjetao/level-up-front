@@ -12,19 +12,19 @@
       </div>
     </v-col>
     <v-col cols="12">
-      <OrganismUserSkillsList />
+      <OrganismCollaboratorSkillsList />
     </v-col>
   </v-row>
 </template>
 
 <script>
-  import OrganismUserSkillsList from "../components/organisms/OrganismUserSkillsList.vue"
+  import OrganismCollaboratorSkillsList from "../components/organisms/OrganismCollaboratorSkillsList.vue"
   import router from "../router"
 
   export default {
     name: 'UserSkills',
     components:{
-      OrganismUserSkillsList,
+      OrganismCollaboratorSkillsList,
     },
 
     data: () => ({
