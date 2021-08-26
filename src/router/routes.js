@@ -1,6 +1,7 @@
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import CourseDetails from '../views/CourseDetails'
+import UserSkillsList from '../views/UserSkillsList'
 
 export default [
   { path: "*", redirect: "/home" },
@@ -27,5 +28,13 @@ export default [
    path: '/coursedetails', // the path of this new page
    component: CourseDetails, // the one you imported
    name: 'course'
+},
+{
+   meta: {
+    public: true // you're saying if this page is public or not (in this case it is :))
+   },
+   path: '/user-skills', // the path of this new page
+   component: UserSkillsList, // the one you imported
+   name: 'user-skills'
 }
 ]

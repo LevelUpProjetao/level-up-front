@@ -10,7 +10,7 @@
     </v-card-title>
     <v-card-subtitle>
       <h4 class="proguess_skill">
-        Em proguesso
+        Em progresso
       </h4>
     </v-card-subtitle>
     <v-card-text>
