@@ -14,17 +14,11 @@
       <v-col cols="auto">
         <div>
           <v-btn
-            text
-            :to="{ name: 'user-skills'}"
-          >
-            <span class="textSeeMore text-none">Ver todas</span>
-          </v-btn>
-          <v-btn
             color="primary"
             class="ml-2 text-none"
             style="textButton"
           >
-            Crie sua própria skill
+            Adicionar nova skill
           </v-btn>
         </div>
       </v-col>
@@ -33,9 +27,8 @@
       <v-col
         v-for="index in 10"
         :key="index"
-        cols="2"
-        md="4"
-        lg="2"
+        md="3"
+        sm="12"
       >
         <MoleculeCardSkill />
       </v-col>
