@@ -19,13 +19,69 @@
           >
             <span class="textSeeMore text-none">Ver todas</span>
           </v-btn>
-          <v-btn
-            color="primary"
-            class="ml-2 text-none"
-            style="textButton"
+          <v-dialog
+            v-model="dialog"
+            width="500"
           >
-            Crie sua própria skill
-          </v-btn>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="primary"
+                class="ml-2 text-none"
+                style="textButton"
+                v-bind="attrs"
+                v-on="on"
+              >
+                Crie sua própria skill
+              </v-btn>
+            </template>
+
+            <v-card>
+              <v-card-title class="text-h4 font-weight-bold lighten-2">
+                Adicionar skill
+              </v-card-title>
+
+              <v-card-text class="dialog-content">
+                <v-text-field
+                  v-model="title"
+                  label="Título da skill"
+                  required
+                  outlined
+                />
+                <v-select
+                  v-model="level"
+                  :items="items"
+                  :rules="[v => !!v || 'Item is required']"
+                  label="Nível"
+                  required
+                  outlined
+                />
+                <v-textarea
+                  outlined
+                  name="about"
+                  label="Fale mais sobre essa skill"
+                />
+              </v-card-text>
+
+              <v-divider />
+
+              <v-card-actions>
+                <v-btn
+                  color="primary"
+                  text
+                  @click="dialog = false"
+                >
+                  Fechar
+                </v-btn>
+                <v-spacer />
+                <v-btn
+                  color="primary"
+                  @click="dialog = false"
+                >
+                  Adicionar
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </div>
       </v-col>
     </v-row>
@@ -52,7 +108,8 @@ export default {
   },
 
   data: () => ({
-    //
+    dialog: false,
+    items: ["Iniciante", "Intermediário", "Avançado"]
   }),
   methods:{
     goToLogin(){
