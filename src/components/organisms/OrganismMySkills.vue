@@ -11,7 +11,10 @@
           Minhas skills
         </h2>
       </v-col>
-      <v-col cols="auto">
+      <v-col
+        v-if="showButtons"
+        cols="auto"
+      >
         <div>
           <v-btn
             text
@@ -85,9 +88,20 @@
         </div>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row
+      v-if="true"
+    >
       <v-col
-        v-for="index in 10"
+        v-for="index in 6"
+        :key="index"
+        cols="4"
+      >
+        <MoleculeCardSkill />
+      </v-col>
+    </v-row>
+    <v-row v-else>
+      <v-col
+        v-for="index in 6"
         :key="index"
         cols="2"
         md="4"
@@ -105,6 +119,12 @@ export default {
   name: 'OrganismMySkills',
   components:{
     MoleculeCardSkill
+  },
+  props:{
+    showButtons: {
+      type: Boolean,
+      default: () => true
+    },
   },
 
   data: () => ({
