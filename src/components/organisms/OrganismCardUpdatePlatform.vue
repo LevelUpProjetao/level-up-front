@@ -1,5 +1,8 @@
 <template>
-  <v-row>
+  <v-row
+    style="cursor:pointer"
+    @click="emitClick"
+  >
     <v-col
       cols="3"
       class="containerImg"
@@ -47,6 +50,9 @@ export default {
     }
   },
   methods:{
+    emitClick() {
+      this.$emit("Click", this.card);
+    },
   }
 };
 </script>

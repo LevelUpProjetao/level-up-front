@@ -25,22 +25,30 @@
           <OrganismCardUpdatePlatform
             class="my-2"
             :card="card"
+            @Click="clickCard"
           />
         </v-col>
       </v-row>
     </v-col>
+    <OrganismDialogAddSkill
+      :dialog="dialogAddSkill"
+      @close="dialogAddSkill=false"
+    />
   </v-row>
 </template>
 
 <script>
 import OrganismCardUpdatePlatform from "./OrganismCardUpdatePlatform.vue"
+import OrganismDialogAddSkill from "./OrganismDialogAddSkill.vue"
 export default {
   name: 'Home',
   components:{
-    OrganismCardUpdatePlatform
+    OrganismCardUpdatePlatform,
+    OrganismDialogAddSkill
   },
 
   data: () => ({
+    dialogAddSkill: false,
     cards: [
       {
         img: 'seeContributor.png',
@@ -65,8 +73,12 @@ export default {
     ]
   }),
   methods:{
-    goToLogin(){
-      router.push("/login");
+    clickCard(card){
+      console.log(card);
+      if(card.title == 'Adicionar nova skill'){
+        console.log('add new skill');
+        this.dialogAddSkill = true
+      }
     }
   }
 };
