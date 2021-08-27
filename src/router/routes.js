@@ -8,16 +8,16 @@ import CollaboratorFirstAccess from '../views/CollaboratorFirstAccess'
 export default [
   { path: "*", redirect: "/login" },
   {
-     meta: {
-      public: true // you're saying if this page is public or not (in this case it is :))
-     },
-     path: '/home', // the path of this new page
-     component: Home, // the one you imported
-     name: 'home'
+    meta: {
+    public: true // you're saying if this page is public or not (in this case it is :))
+    },
+    path: '/home', // the path of this new page
+    component: Home, // the one you imported
+    name: 'home'
   },
   {
    meta: {
-   public: true // you're saying if this page is public or not (in this case it is :))
+    public: true // you're saying if this page is public or not (in this case it is :))
    },
    path: '/home-business', // the path of this new page
    component: HomeBusiness, // the one you imported
