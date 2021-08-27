@@ -7,18 +7,18 @@
       align-content="center"
       justify="space-between"
     >
-      <v-col cols='10'>
+      <v-col cols="10">
         <v-card-title class="text-h5 font-weight-bold lighten-2 ml-2">
           Compartilhar recurso
         </v-card-title>
       </v-col>
-      <v-col cols='2'>
+      <v-col cols="2">
         <v-btn
           outlined
           color="primary"
           class="ml-2 text-none"
-          @click="closeDialog"
           style="textButton"
+          @click="closeDialog"
         >
           <v-icon small>
             mdi-close

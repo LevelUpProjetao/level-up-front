@@ -16,8 +16,8 @@
           <v-btn
             color="primary"
             class="ml-2 text-none"
-            @click='openShareRessource'
             style="textButton"
+            @click="openShareRessource"
           >
             <v-icon small>
               mdi-plus
@@ -32,22 +32,22 @@
         :key="index"
         cols="4"
       >
-        <div @click='openRessource'>
+        <div @click="openRessource">
           <molecule-ressource />
         </div>
       </v-col>
     </v-row>
     <v-dialog 
-      v-model='openRessourceDialog'
+      v-model="openRessourceDialog"
       max-width="500"
     >
-      <molecule-ressource-dialog @close='closeRessourceDialog' />
+      <molecule-ressource-dialog @close="closeRessourceDialog" />
     </v-dialog>
     <v-dialog 
-      v-model='openShareRessourceDialog'
+      v-model="openShareRessourceDialog"
       max-width="500"
     >
-      <molecule-share-ressource-dialog @close='closeShareRessourceDialog' />
+      <molecule-share-ressource-dialog @close="closeShareRessourceDialog" />
     </v-dialog>
   </div>
 </template>
