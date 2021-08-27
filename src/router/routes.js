@@ -6,7 +6,7 @@ import CollaboratorSkillsList from '../views/CollaboratorSkillsList'
 import CollaboratorFirstAccess from '../views/CollaboratorFirstAccess'
 
 export default [
-  { path: "*", redirect: "/home" },
+  { path: "*", redirect: "/login" },
   {
      meta: {
       public: true // you're saying if this page is public or not (in this case it is :))
