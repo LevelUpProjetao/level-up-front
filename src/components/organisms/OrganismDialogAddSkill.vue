@@ -28,7 +28,7 @@
         >
           <v-col cols="3">
             <v-text-field
-              v-model="form.resource.name"
+              v-model="form.resource[index].name"
               label="Recurso"
               required
               outlined
@@ -39,7 +39,7 @@
             class="mx-4"
           >
             <v-text-field
-              v-model="form.resource.description"
+              v-model="form.resource[index].description"
               label="Descrição do Recurso"
               required
               outlined
@@ -47,7 +47,7 @@
           </v-col>
           <v-col cols="3">
             <v-text-field
-              v-model="form.resource.link"
+              v-model="form.resource[index].link"
               label="Link"
               required
               outlined
@@ -55,14 +55,24 @@
           </v-col>
           <v-col
             cols="1"
-            class="mt-3"
+            class=""
           >
             <v-btn
               color="primary"
               text
+              small
               @click="addNewResource()"
             >
               <v-icon>mdi-plus</v-icon>
+            </v-btn>
+            <v-btn
+              v-show="form.resource.length > 1"
+              color="primary"
+              text
+              small
+              @click="removeNewResource(index)"
+            >
+              <v-icon>mdi-minus</v-icon>
             </v-btn>
           </v-col>
         </v-row>
@@ -112,6 +122,9 @@ export default {
     },
     addNewResource(){
       this.form.resource.push({name:'',description:'',link:''})
+    },
+    removeNewResource(index){
+      this.form.resource.splice(index,1)
     }
   }
 };
