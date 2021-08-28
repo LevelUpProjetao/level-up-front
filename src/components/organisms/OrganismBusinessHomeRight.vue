@@ -34,21 +34,28 @@
       :dialog="dialogAddSkill"
       @close="dialogAddSkill=false"
     />
+    <OrganismDialogAddContributors
+      :dialog="dialogAddContributors"
+      @close="dialogAddContributors=false"
+    />
   </v-row>
 </template>
 
 <script>
 import OrganismCardUpdatePlatform from "./OrganismCardUpdatePlatform.vue"
 import OrganismDialogAddSkill from "./OrganismDialogAddSkill.vue"
+import OrganismDialogAddContributors from "./OrganismDialogAddContributors.vue"
 export default {
   name: 'Home',
   components:{
     OrganismCardUpdatePlatform,
-    OrganismDialogAddSkill
+    OrganismDialogAddSkill,
+    OrganismDialogAddContributors
   },
 
   data: () => ({
     dialogAddSkill: false,
+    dialogAddContributors: false,
     cards: [
       {
         img: 'seeContributor.png',
@@ -75,7 +82,10 @@ export default {
   methods:{
     clickCard(card){
       console.log(card);
-      if(card.title == 'Adicionar nova skill'){
+      if(card.title == 'Adicionar Colaborador(a)'){
+        console.log('add new colaborador');
+        this.dialogAddContributors = true
+      }else if(card.title == 'Adicionar nova skill'){
         console.log('add new skill');
         this.dialogAddSkill = true
       }
