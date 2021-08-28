@@ -1,18 +1,29 @@
 import Home from '../views/Home.vue'
+import HomeBusiness from '../views/HomeBusiness.vue'
 import Login from '../views/Login.vue'
 import CourseDetails from '../views/CourseDetails'
 import CompanySkills from '../views/CompanySkills'
 import Colarators from '../views/Colaborators'
+import CollaboratorSkillsList from '../views/CollaboratorSkillsList'
+import CollaboratorFirstAccess from '../views/CollaboratorFirstAccess'
 
 export default [
-  { path: "*", redirect: "/home" },
+  { path: "*", redirect: "/login" },
   {
-     meta: {
-      public: true // you're saying if this page is public or not (in this case it is :))
-     },
-     path: '/home', // the path of this new page
-     component: Home, // the one you imported
-     name: 'home'
+    meta: {
+    public: true // you're saying if this page is public or not (in this case it is :))
+    },
+    path: '/home', // the path of this new page
+    component: Home, // the one you imported
+    name: 'home'
+  },
+  {
+   meta: {
+    public: true // you're saying if this page is public or not (in this case it is :))
+   },
+   path: '/home-business', // the path of this new page
+   component: HomeBusiness, // the one you imported
+   name: 'home'
   },
   {
     meta: {
@@ -46,4 +57,21 @@ export default [
       component: Colarators, // the one you imported
       name: 'colaborators'
       }
+},
+{
+   meta: {
+    public: true // you're saying if this page is public or not (in this case it is :))
+   },
+   path: '/collaborator-skills', // the path of this new page
+   component: CollaboratorSkillsList, // the one you imported
+   name: 'collaborator-skills'
+},
+{
+   meta: {
+    public: true // you're saying if this page is public or not (in this case it is :))
+   },
+   path: '/collaborator-first-access', // the path of this new page
+   component: CollaboratorFirstAccess, // the one you imported
+   name: 'collaborator-first-access'
+}
 ]

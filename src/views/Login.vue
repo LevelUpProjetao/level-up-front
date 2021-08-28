@@ -1,40 +1,25 @@
 <template>
-  <div>
-    <h1
-      v-if="!this.$store.state.isLogged"
-      @click="login"
-    >
-      Faça seu login
-    </h1>
-    <h1
-      v-if="this.$store.state.isLogged"
-      @click="logout"
-    >
-      Faça seu logout
-    </h1>
+  <div class="login_wrapper">
+    <OrganismLoginContainer />
   </div>
 </template>
 <script>
 import router from "../router";
-
+import OrganismLoginContainer from '../components/organisms/OrganismLoginContainer';
 export default {
     name: "About",
-    methods: {
-        login() {
-            alert('Olhe o log e vc fez login')
-            this.$store.dispatch("setLogged", true);
-            // router.push("/home");
-        },
-        logout() {
-            alert('Olhe o log e vc fez login')
-
-            this.$store.dispatch("setLogged", false);
-            // router.push("/home");
-        }
+    components:{
+      OrganismLoginContainer,
     },
 };
 </script>
 
 <style scoped lang="scss">
-
+  .login_wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 </style>

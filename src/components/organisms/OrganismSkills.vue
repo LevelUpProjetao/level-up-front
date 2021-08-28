@@ -73,7 +73,6 @@ export default {
 
 }
 .textSeeMore{
-  
   font-style: normal;
   font-weight: bold;
   font-size: 16px;

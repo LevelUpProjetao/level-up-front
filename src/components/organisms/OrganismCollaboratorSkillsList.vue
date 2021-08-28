@@ -11,17 +11,8 @@
           Minhas skills
         </h2>
       </v-col>
-      <v-col
-        v-if="showButtons"
-        cols="auto"
-      >
+      <v-col cols="auto">
         <div>
-          <v-btn
-            text
-            :to="{ name: 'collaborator-skills'}"
-          >
-            <span class="textSeeMore text-none">Ver todas</span>
-          </v-btn>
           <v-dialog
             v-model="dialog"
             width="500"
@@ -34,7 +25,7 @@
                 v-bind="attrs"
                 v-on="on"
               >
-                Crie sua própria skill
+                Adicionar nova skill
               </v-btn>
             </template>
 
@@ -88,24 +79,12 @@
         </div>
       </v-col>
     </v-row>
-    <v-row
-      v-if="true"
-    >
+    <v-row>
       <v-col
-        v-for="index in 6"
+        v-for="index in 10"
         :key="index"
-        cols="4"
-      >
-        <MoleculeCardSkill />
-      </v-col>
-    </v-row>
-    <v-row v-else>
-      <v-col
-        v-for="index in 6"
-        :key="index"
-        cols="2"
-        md="4"
-        lg="2"
+        md="3"
+        sm="12"
       >
         <MoleculeCardSkill />
       </v-col>
@@ -115,26 +94,18 @@
 
 <script>
 import MoleculeCardSkill from "../molecules/MoleculeCardSkill.vue"
+
 export default {
   name: 'OrganismMySkills',
-  components:{
+  components: {
     MoleculeCardSkill
-  },
-  props:{
-    showButtons: {
-      type: Boolean,
-      default: () => true
-    },
   },
 
   data: () => ({
     dialog: false,
     items: ["Iniciante", "Intermediário", "Avançado"]
   }),
-  methods:{
-    goToLogin(){
-      router.push("/login");
-    }
+  methods: {
   }
 };
 </script>
@@ -162,5 +133,8 @@ export default {
   font-weight: 700;
   line-height: 22px;
   letter-spacing: 0em;
+}
+.dialogContent {
+  padding-top: 20px;
 }
 </style>
