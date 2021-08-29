@@ -11,7 +11,7 @@
       <OrganismNewResource class="mt-5" />
     </v-col>
     <v-col cols="7">
-      <OrganismSkills :skills="skills" />
+      <OrganismSkills :skills="skillsRecommendations" />
     </v-col>
   </v-row>
 </template>
@@ -32,10 +32,12 @@ export default {
   },
 
   data: () => ({
-    skills: undefined
+    skills: undefined,
+    skillsRecommendations: undefined
   }),
   async created(){
     this.skills = (await api.get("/skills")).data
+    this.skillsRecommendations = (await api.get(`/users/${this.$store.state.user.email}/recommendations`)).data
     console.log('skills: ' , this.skills);
   },
   methods:{
