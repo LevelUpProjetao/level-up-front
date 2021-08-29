@@ -5,7 +5,7 @@
   >
     <v-card-title>
       <h3 class="title_skill">
-        Oratória
+        {{ skill.name }}
       </h3>
     </v-card-title>
     <v-card-subtitle>
@@ -22,6 +22,18 @@
 </template>
 
 <script>
+export default {
+  props:{
+    skill: {
+        type: Object,
+        default: () => {}
+      }
+  },
+  
+  created(){
+    console.error(this.skill);
+  }
+}
 </script>
 <style scoped>
 .title_skill{
