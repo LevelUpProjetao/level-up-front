@@ -146,13 +146,14 @@ export default {
     },
     async addSkill(){
       console.log("adding skill");
-      // console.log(JSON.stringify(this.form,null,2));
-      // try {
-      //   const tagsData = await api.post("/skills",this.form)
-      // } catch (error) {
-      //   console.error(error);
-      // }
-      this.$store.dispatch("addAlert", {color: "error" , message: "Sua skill foi criada com sucesso."});
+      try {
+        const tagsData = await api.post("/skills",this.form)
+        this.$store.dispatch("addAlert", {color: "success" , message: "Sua skill foi criada com sucesso."});
+      } catch (error) {
+        console.error(error);
+        this.$store.dispatch("addAlert", {color: "error" , message: "Opss... Erro interno tente mais tarde"});
+      }
+      
 
     },
     addNewResource(){
