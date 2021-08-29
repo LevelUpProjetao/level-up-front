@@ -4,6 +4,24 @@
     <v-main
       class="mx-16 mt-10"
     >
+      <v-snackbar
+        v-model="$store.state.showAlert"
+        top
+        :color="$store.state.colorAlert"
+      >
+        {{ $store.state.messageAlert }}
+
+        <template v-slot:action="{ attrs }">
+          <v-btn
+            color="#9f3dee"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+          >
+            OK
+          </v-btn>
+        </template>
+      </v-snackbar>
       <router-view />
     </v-main>
   </v-app>

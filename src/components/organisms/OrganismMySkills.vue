@@ -92,11 +92,11 @@
       v-if="true"
     >
       <v-col
-        v-for="index in 6"
+        v-for="(skill, index) in skills"
         :key="index"
         cols="4"
       >
-        <MoleculeCardSkill />
+        <MoleculeCardSkill :skill="skill" />
       </v-col>
     </v-row>
     <v-row v-else>
@@ -107,7 +107,7 @@
         md="4"
         lg="2"
       >
-        <MoleculeCardSkill />
+        <MoleculeCardSkill :skill="skill" />
       </v-col>
     </v-row>
   </div>
@@ -121,16 +121,22 @@ export default {
     MoleculeCardSkill
   },
   props:{
+    skills: {
+      type: Array,
+      default: () => []
+    },
     showButtons: {
       type: Boolean,
       default: () => true
     },
   },
-
   data: () => ({
     dialog: false,
     items: ["Iniciante", "Intermediário", "Avançado"]
   }),
+  created(){
+    console.log(this.skills);
+  },
   methods:{
     goToLogin(){
       router.push("/login");

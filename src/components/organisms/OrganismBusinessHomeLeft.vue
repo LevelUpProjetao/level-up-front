@@ -4,7 +4,10 @@
     no-gutters
   >
     <v-col cols="12">
-      <OrganismMySkills :show-buttons="false" />
+      <OrganismMySkills
+        :show-buttons="false"
+        :skills="skills"
+      />
     </v-col>
     <v-row
       class="mt-5"
@@ -28,6 +31,7 @@ import OrganismMySkills from "./OrganismMySkills.vue"
 import OrganismNewResource from './OrganismNewResource.vue'
 import OrganismSkillContributors from './OrganismSkillContributors.vue'
 import OrganismInfoGeneral from './OrganismInfoGeneral.vue'
+import api from "../../api/axios"
 export default {
   components:{
     OrganismMySkills,
@@ -38,7 +42,13 @@ export default {
 
   data: () => ({
     //
+    skills: undefined
   }),
+  async created(){
+    console.log("Criando tela home-business");
+    this.skills = (await api.get("/skills")).data
+    console.log(this.skills);
+  },
   methods:{
     goToLogin(){
       router.push("/login");

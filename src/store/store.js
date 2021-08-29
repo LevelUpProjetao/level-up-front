@@ -7,6 +7,10 @@ import VuexPersistence from "vuex-persist";
 const initialState = () => ({
     isLogged: false,
     user: null,
+    testando: 'hello world',
+    showAlert: false,
+    messageAlert: "Sua skill foi criada",
+    colorAlert: "Sucess"
 });
 
 Vue.use(Vuex);
@@ -32,6 +36,8 @@ export const store = new Vuex.Store({
         },
         setUser(context, value) {
           context.commit("updateUser", value);
+        addAlert(context, value){
+            context.commit("updateAlert", value);
         }
     },
     //after call mutation
@@ -41,6 +47,12 @@ export const store = new Vuex.Store({
         },
         updateUser(state, value) {
           state.user = {...value};
+        },
+        updateAlert(state, value) {
+            console.log(value);
+            state.messageAlert = value.message;
+            state.colorAlert = value.color;
+            state.showAlert = true
         }
     },
 });
