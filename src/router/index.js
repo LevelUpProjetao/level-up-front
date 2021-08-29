@@ -30,8 +30,8 @@ const defaultRedirect = {
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = store.state.isLogged;
-  const role = store.state.user.systemRole;
-  const isFirstLogin = store.state.user.isFirstLogin;
+  
+  const isFirstLogin = store.state.user?.isFirstLogin;
 
   if (!isAuthenticated) {
     if (to.fullPath === '/login') {
@@ -40,6 +40,7 @@ router.beforeEach((to, from, next) => {
       next('/login');
     }
   } else {
+    const role = store.state.user.systemRole;
     if (role === 'collaborator' && isFirstLogin && to.fullPath !== '/collaborator-first-access') {
       next('/collaborator-first-access');
     } else if (allowedPaths[role].indexOf(to.fullPath) !== -1) {
