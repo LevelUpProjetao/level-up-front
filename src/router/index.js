@@ -20,6 +20,7 @@ const allowedPaths = {
   'company': [
     '/home-business',
     '/coursedetails',
+    '/company-skills',
   ],
 }
 

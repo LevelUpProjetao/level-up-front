@@ -16,7 +16,7 @@
             color="#9f3dee"
             text
             v-bind="attrs"
-            @click="snackbar = false"
+            @click="$store.state.showAlert = false"
           >
             OK
           </v-btn>
