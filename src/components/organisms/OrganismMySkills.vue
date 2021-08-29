@@ -138,7 +138,7 @@ export default {
   data: () => ({
     dialog: false,
     items: ["Iniciante", "Intermediário", "Avançado"],
-    form: {name: '', level: '',description:""}
+    form: {name: '', level: '', description: ''}
   }),
   computed:{
     skillsLimited(){
