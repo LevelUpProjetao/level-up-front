@@ -1,10 +1,21 @@
 <template>
-  <v-avatar>
-    <img
-      :src="url"
-      alt="John"
+  <div>
+    <v-avatar v-if="url">
+      <img
+        :src="url"
+        alt="John"
+      >
+    </v-avatar>
+    <v-avatar
+      v-else
+      color="indigo"
     >
-  </v-avatar>
+      <v-icon dark>
+        mdi-account-circle
+      </v-icon>
+    </v-avatar>
+    <div />
+  </div>
 </template>
 
 <script>
