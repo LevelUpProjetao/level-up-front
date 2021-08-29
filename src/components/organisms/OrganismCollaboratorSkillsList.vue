@@ -84,7 +84,10 @@
       <v-col
         v-for="(skill, index) in skillsLimited"
         :key="index"
-        cols="4"
+        cols="2"
+        sm="4"
+        md="3"
+        lg="2"
       >
         <MoleculeCardSkill :skill="skill" />
       </v-col>
