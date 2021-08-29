@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import VuexPersistence from "vuex-persist";
+import router from '../router';
 
 // Import the plugin module here
 
@@ -36,6 +37,7 @@ export const store = new Vuex.Store({
         },
         setUser(context, value) {
           context.commit("updateUser", value);
+        },
         addAlert(context, value){
             context.commit("updateAlert", value);
         }

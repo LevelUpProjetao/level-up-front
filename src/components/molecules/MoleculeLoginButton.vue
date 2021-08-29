@@ -14,9 +14,32 @@
 <script>
   import router from "../../router";
   import firebase from 'firebase';
+  import api from "../../api/axios"
 
   export default {
+    
     methods: {
+      async checkEmail(object) {
+        const user = {...object};
+        try {
+          const { data } = await api.get(`/users/${user.email}`);
+          if (data.is_admin) {
+            user.role = 'company';
+          } else {
+            user.role = 'collaborator';
+            if (Array.isArray(data.interested_tags)) {
+              user.isFirstLogin = false;
+            } else {
+              user.isFirstLogin = true;
+            }
+          }
+          this.$store.dispatch("setUser", user);
+          this.$store.dispatch("setLogged", true);
+          router.push('/home-business');
+        } catch (err) {
+          this.$store.dispatch("addAlert", {color: "error" , message: "Sua conta não está liberada para acessar a plataforma."});
+        }
+      },
       login() {
         let provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth()
@@ -31,9 +54,7 @@
             firebaseAccessToken: token,
             firebaseRefreshToken: user?.refreshToken,
           }
-          this.$store.dispatch("setUser", obj);
-          this.$store.dispatch("setLogged", true);
-          router.push('/home')
+          this.checkEmail(obj);
         })
         .catch((err) => {
           console.log(err); // This will give you all the information needed to further debug any errors
