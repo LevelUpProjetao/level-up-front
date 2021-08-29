@@ -68,7 +68,6 @@ export default {
     }
   },
   created(){
-    console.log('asdsadsad sadas ');
     console.log(this.skill);
   }
 };
