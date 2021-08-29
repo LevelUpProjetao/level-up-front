@@ -13,15 +13,32 @@
 
 <script>
   import router from "../../router";
+  import firebase from 'firebase';
+
   export default {
     methods: {
       login() {
-        this.$store.dispatch("setLogged", true);
-        router.push('/home')
+        let provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          let token = result.credential.accessToken;
+          let user = result.user;
+          const obj = {
+            name: user?.displayName,
+            photo: user?.photoURL,
+            email: user?.email,
+            firebaseAccessToken: token,
+            firebaseRefreshToken: user?.refreshToken,
+          }
+          this.$store.dispatch("setUser", obj);
+          this.$store.dispatch("setLogged", true);
+          router.push('/home')
+        })
+        .catch((err) => {
+          console.log(err); // This will give you all the information needed to further debug any errors
+        });
       },
-      logout() {
-        this.$store.dispatch("setLogged", false);
-      }
     }
   }
 

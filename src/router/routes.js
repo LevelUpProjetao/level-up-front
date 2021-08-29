@@ -6,10 +6,16 @@ import CollaboratorSkillsList from '../views/CollaboratorSkillsList'
 import CollaboratorFirstAccess from '../views/CollaboratorFirstAccess'
 
 export default [
-  { path: "*", redirect: "/login" },
+  { 
+    meta: {
+      requiresAuth: false,
+    },
+    path: "*",
+    redirect: "/login"
+  },
   {
     meta: {
-    public: true // you're saying if this page is public or not (in this case it is :))
+      requiresAuth: true 
     },
     path: '/home', // the path of this new page
     component: Home, // the one you imported
@@ -17,7 +23,7 @@ export default [
   },
   {
    meta: {
-    public: true // you're saying if this page is public or not (in this case it is :))
+    requiresAuth: true
    },
    path: '/home-business', // the path of this new page
    component: HomeBusiness, // the one you imported
@@ -25,7 +31,7 @@ export default [
   },
   {
     meta: {
-     public: true // you're saying if this page is public or not (in this case it is :))
+      requiresAuth: false,
     },
     path: '/login', // the path of this new page
     component: Login, // the one you imported
@@ -33,7 +39,7 @@ export default [
  },
  {
    meta: {
-    public: true // you're saying if this page is public or not (in this case it is :))
+    requiresAuth: true,
    },
    path: '/coursedetails', // the path of this new page
    component: CourseDetails, // the one you imported
@@ -41,7 +47,7 @@ export default [
 },
 {
    meta: {
-    public: true // you're saying if this page is public or not (in this case it is :))
+    requiresAuth: true,
    },
    path: '/collaborator-skills', // the path of this new page
    component: CollaboratorSkillsList, // the one you imported
@@ -49,7 +55,7 @@ export default [
 },
 {
    meta: {
-    public: true // you're saying if this page is public or not (in this case it is :))
+    requiresAuth: true,
    },
    path: '/collaborator-first-access', // the path of this new page
    component: CollaboratorFirstAccess, // the one you imported

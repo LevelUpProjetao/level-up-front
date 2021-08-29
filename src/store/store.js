@@ -6,7 +6,7 @@ import VuexPersistence from "vuex-persist";
 
 const initialState = () => ({
     isLogged: false,
-    testando: 'hello world'
+    user: null,
 });
 
 Vue.use(Vuex);
@@ -15,6 +15,7 @@ const vuexLocal = new  VuexPersistence ({
     storage: window.localStorage,
     reducer: (state) => ({
         isLogged: state.isLogged,
+        user: state.user,
     }),
 });
 
@@ -27,13 +28,19 @@ export const store = new Vuex.Store({
     // first call action
     actions: {
         setLogged(context, value) {
-            context.commit("updateLogged", value);
+          context.commit("updateLogged", value);
         },
+        setUser(context, value) {
+          context.commit("updateUser", value);
+        }
     },
     //after call mutation
     mutations: {
         updateLogged(state, value) {
-            state.isLogged = value;
+          state.isLogged = value;
         },
+        updateUser(state, value) {
+          state.user = {...value};
+        }
     },
 });
