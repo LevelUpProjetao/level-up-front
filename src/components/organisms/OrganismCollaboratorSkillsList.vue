@@ -80,35 +80,69 @@
         </div>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row v-if="skillsLimited.length > 0">
       <v-col
-        v-for="index in 10"
+        v-for="(skill, index) in skillsLimited"
         :key="index"
+        cols="2"
+        sm="4"
         md="3"
-        sm="12"
+        lg="2"
       >
-        <MoleculeCardSkill />
+        <MoleculeCardSkill :skill="skill" />
       </v-col>
+    </v-row>
+    <v-row
+      v-else
+      no-gutters
+      class="mt-4"
+    >
+      <h3>Nenhuma skill adicionada até o momento.</h3>
     </v-row>
   </div>
 </template>
 
 <script>
 import MoleculeCardSkill from "../molecules/MoleculeCardSkill.vue"
+import api from "../../api/axios"
 
 export default {
   name: 'OrganismMySkills',
   components: {
     MoleculeCardSkill
   },
-
   data: () => ({
     dialog: false,
     items: ["Iniciante", "Intermediário", "Avançado"],
-    form: {name: '', level: '',description:""}
+    form: {name: '', level: '', description: ''},
+    skills: []
   }),
+  computed:{
+    skillsLimited(){
+      if(Array.isArray(this.skills)){
+        let limit
+        if(!this.viewCollaborator){
+          return this.skills
+        }
+        else if(this.$vuetify.breakpoint.mdAndDown){
+          limit = 6
+        }else if(this.$vuetify.breakpoint.lgAndUp){
+          limit = 12
+        }
+        let array = this.skills.slice(0,limit)
+        console.log(array)
+        return array
+      } else {
+        return []
+      }
+    }
+  },
+  async created(){
+    this.skills = (await api.get("/skills")).data
+    console.log('skills: ' , this.skills)
+  },
   methods: {
-  }
+  },
 };
 </script>
 <style scoped>
