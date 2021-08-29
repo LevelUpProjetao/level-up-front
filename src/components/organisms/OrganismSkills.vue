@@ -28,7 +28,7 @@
       </v-col>
     </v-row>
     <v-row
-      justify="center" 
+      justify="start" 
       no-gutters
       class="pt-4"
     >
@@ -38,7 +38,7 @@
         cols="auto"
         sm="auto"
         md="auto"
-        lg="6"
+        lg="4"
         class="pa-0"
       >
         <MoleculeCardSummarySkill :skill="skill" />
