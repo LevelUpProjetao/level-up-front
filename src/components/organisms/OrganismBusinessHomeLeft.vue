@@ -7,6 +7,7 @@
       <OrganismMySkills
         :show-buttons="false"
         :skills="skills"
+        :view-collaborator="false"
       />
     </v-col>
     <v-row

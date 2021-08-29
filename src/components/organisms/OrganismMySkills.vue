@@ -90,10 +90,10 @@
       </v-col>
     </v-row>
     <v-row
-      v-if="viewCollaborator"
+      v-if="!viewCollaborator"
     >
       <v-col
-        v-for="(skill, index) in skills"
+        v-for="(skill, index) in skillsLimited"
         :key="index"
         cols="4"
       >
@@ -102,7 +102,7 @@
     </v-row>
     <v-row v-else>
       <v-col
-        v-for="index in 6"
+        v-for="(skill, index) in skillsLimited"
         :key="index"
         cols="2"
         md="4"
@@ -124,7 +124,7 @@ export default {
   props:{
     viewCollaborator: {
       type: Boolean,
-      default: () => false
+      default: () => true
     },
     skills: {
       type: Array,
@@ -140,6 +140,26 @@ export default {
     items: ["Iniciante", "Intermediário", "Avançado"],
     form: {name: '', level: '',description:""}
   }),
+  computed:{
+    skillsLimited(){
+      if(Array.isArray(this.skills)){
+        let limit
+        if(!this.viewCollaborator){
+          return this.skills
+        }
+        else if(this.$vuetify.breakpoint.mdAndDown){
+          limit = 6
+        }else if(this.$vuetify.breakpoint.lgAndUp){
+          limit = 12
+        }
+        let array = this.skills.slice(0,limit)
+        console.log(array);
+        return array
+      }else{
+        return []
+      }
+    }
+  },
   created(){
     console.log(this.skills);
   },

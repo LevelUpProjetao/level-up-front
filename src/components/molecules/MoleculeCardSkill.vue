@@ -38,8 +38,8 @@ export default {
   computed: {
     getDescription(){
       const description = this.skill.description
-      if(description.length>100){
-        return description.slice(0,99) + "..." 
+      if(description.length>80){
+        return description.slice(0,79) + "..." 
       }else{
         return description
       }
