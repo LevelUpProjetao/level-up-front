@@ -11,7 +11,7 @@
       <OrganismNewResource class="mt-5" />
     </v-col>
     <v-col cols="7">
-      <OrganismSkills />
+      <OrganismSkills :skills="skills" />
     </v-col>
   </v-row>
 </template>

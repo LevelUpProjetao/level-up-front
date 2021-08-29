@@ -31,7 +31,7 @@
       class="pt-4"
     >
       <v-col
-        v-for="index in 4"
+        v-for="(skill,index) in skills.slice(0,4)"
         :key="index"
         cols="auto"
         sm="auto"
@@ -39,7 +39,7 @@
         lg="6"
         class="pa-0"
       >
-        <MoleculeCardSummarySkill />
+        <MoleculeCardSummarySkill :skill="skill" />
       </v-col>
     </v-row>
   </div>
@@ -51,6 +51,12 @@ export default {
   name: 'OrganismSkills',
   components:{
     MoleculeCardSummarySkill
+  },
+  props:{
+    skills: {
+      type: Array,
+      default: () => []
+    },
   },
 
   data: () => ({
