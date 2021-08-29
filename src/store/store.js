@@ -6,7 +6,10 @@ import VuexPersistence from "vuex-persist";
 
 const initialState = () => ({
     isLogged: false,
-    testando: 'hello world'
+    testando: 'hello world',
+    showAlert: false,
+    messageAlert: "Sua skill foi criada",
+    colorAlert: "Sucess"
 });
 
 Vue.use(Vuex);
@@ -29,11 +32,20 @@ export const store = new Vuex.Store({
         setLogged(context, value) {
             context.commit("updateLogged", value);
         },
+        addAlert(context, value){
+            context.commit("updateAlert", value);
+        }
     },
     //after call mutation
     mutations: {
         updateLogged(state, value) {
             state.isLogged = value;
         },
+        updateAlert(state, value) {
+            console.log(value);
+            state.messageAlert = value.message;
+            state.colorAlert = value.color;
+            state.showAlert = true
+        }
     },
 });
