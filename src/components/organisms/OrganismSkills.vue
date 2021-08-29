@@ -19,6 +19,7 @@
           <v-btn
             text
             class="textSeeMore text-none"
+            @click="seeAllFunction"
           >
             Ver todas
           </v-btn>
@@ -31,7 +32,7 @@
       class="pt-4"
     >
       <v-col
-        v-for="(skill,index) in skills.slice(0,4)"
+        v-for="(skill,index) in getSkill"
         :key="index"
         cols="auto"
         sm="auto"
@@ -60,9 +61,21 @@ export default {
   },
 
   data: () => ({
-    //
+    seeAll: false
   }),
+  computed: {
+    getSkill(){
+      if(this.seeAll){
+        return this.skills
+      }else{
+        return this.skills.slice(0,4)
+      }
+    }
+  },
   methods:{
+    seeAllFunction(){
+      this.seeAll = !this.seeAll
+    },
     goToLogin(){
       router.push("/login");
     }
