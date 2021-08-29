@@ -8,21 +8,20 @@
       align="center"
       align-content="center"
       justify="space-between"
+      class="skillsSectionHeader"
     >
       <v-col cols="auto">
-        <h2 class="textTitle">
-          Skills
-        </h2>
+        <h3 class="textTitle">
+          Skills Recomendadas
+        </h3>
       </v-col>
       <v-col cols="auto">
-        <div>
-          <v-btn
-            text
-            class="textSeeMore text-none"
-          >
-            Ver todas
-          </v-btn>
-        </div>
+        <v-btn
+          text
+          class="textSeeMore text-none"
+        >
+          Ver todas
+        </v-btn>
       </v-col>
     </v-row>
     <v-row
@@ -70,13 +69,12 @@ export default {
 };
 </script>
 <style scoped>
+.skillsSectionHeader {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
 .textTitle{
-  font-size: 35px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 47px;
-  letter-spacing: 0em;
-
+  font-size: 25px;
 }
 .textSeeMore{
   font-style: normal;
