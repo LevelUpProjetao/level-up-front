@@ -30,7 +30,7 @@ const defaultRedirect = {
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = store.state.isLogged;
-  const role = store.state.user.role;
+  const role = store.state.user.systemRole;
   const isFirstLogin = store.state.user.isFirstLogin;
 
   if (!isAuthenticated) {

@@ -24,16 +24,20 @@
         try {
           const { data } = await api.get(`/users/${user.email}`);
           if (data.is_admin) {
-            user.role = 'company';
+            user.systemRole = 'company';
           } else {
-            user.role = 'collaborator';
+            user.systemRole = 'collaborator';
             if (Array.isArray(data.interested_tags)) {
               user.isFirstLogin = false;
             } else {
               user.isFirstLogin = true;
             }
           }
-          this.$store.dispatch("setUser", user);
+          const userObject = {
+            ...user,
+            ...data
+          }
+          this.$store.dispatch("setUser", userObject);
           this.$store.dispatch("setLogged", true);
           router.push('/home-business');
         } catch (err) {
