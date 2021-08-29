@@ -11,7 +11,7 @@
     >
       <v-col cols="auto">
         <h2 class="textTitle">
-          Skills
+          Skills recomendadas
         </h2>
       </v-col>
       <v-col cols="auto">
