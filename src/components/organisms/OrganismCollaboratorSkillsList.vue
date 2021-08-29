@@ -35,26 +35,40 @@
               </v-card-title>
 
               <v-card-text class="dialog-content">
-                <v-text-field
-                  v-model="form.name"
-                  label="Título da skill"
-                  required
-                  outlined
-                />
-                <v-select
-                  v-model="form.level"
-                  :items="items"
-                  :rules="[v => !!v || 'Item is required']"
-                  label="Nível"
-                  required
-                  outlined
-                />
-                <v-textarea
-                  v-model="form.description"
-                  outlined
-                  name="about"
-                  label="Fale mais sobre essa skill"
-                />
+                <v-form
+                  ref="form"
+                  v-model="valid"
+                  lazy-validation
+                >
+                  <v-text-field
+                    v-model="form.name"
+                    label="Título da skill"
+                    required
+                    outlined
+                    :rules="[
+                      v => !!v || 'A skill precisa de titulo',
+                      v => (v && v.length <= 20) || 'O titulo deve ter menos de 20 caracteres.',
+                    ]"
+                  />
+                  <v-select
+                    v-model="form.level"
+                    :items="items"
+                    :rules="[v => !!v || 'Selecione o nivel']"
+                    label="Nível"
+                    required
+                    outlined
+                  />
+                  <v-textarea
+                    v-model="form.description"
+                    outlined
+                    name="about"
+                    label="Fale mais sobre essa skill"
+                    required
+                    :rules="[
+                      v => !!v || 'Descreva um pouco a skill'
+                    ]"
+                  />
+                </v-form>
               </v-card-text>
 
               <v-divider />
@@ -70,7 +84,7 @@
                 <v-spacer />
                 <v-btn
                   color="primary"
-                  @click="dialog = false"
+                  @click="submitForm"
                 >
                   Adicionar
                 </v-btn>
@@ -142,6 +156,28 @@ export default {
     console.log('skills: ' , this.skills)
   },
   methods: {
+    async updateSkills() {
+      this.skills = (await api.get("/skills")).data
+    },
+    async submitForm() {
+      if (!this.$refs.form.validate()) {
+        return;
+      }
+      const values = {
+        name: this.form.name,
+        level: this.form.level,
+        description: this.form.description,
+        created_by: this.$store.state.user.id
+      };
+      try {
+        await api.post('/skills', values);
+        this.dialog = false;
+        this.$store.dispatch("addAlert", { color: "success" , message: "Sua skill foi criada com sucesso." });
+      } catch (err) {
+        this.$store.dispatch("addAlert", { color: "error" , message: "Algo deu errado na hora de criar sua skill." });
+      }
+      this.updateSkills();
+    }
   },
 };
 </script>

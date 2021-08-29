@@ -56,6 +56,7 @@
                     outlined
                     :rules="[
                       v => !!v || 'A skill precisa de titulo',
+                      v => (v && v.length <= 20) || 'O titulo deve ter menos de 20 caracteres.',
                     ]"
                   />
                   <v-select
@@ -129,6 +130,7 @@
 
 <script>
 import MoleculeCardSkill from "../molecules/MoleculeCardSkill.vue"
+import api from "../../api/axios"
 export default {
   name: 'OrganismMySkills',
   components:{
@@ -151,7 +153,7 @@ export default {
   data: () => ({
     dialog: false,
     items: ["Iniciante", "Intermediário", "Avançado"],
-    form: {name: '', level: '', description: ''}
+    form: {name: '', level: '',description:""}
   }),
   computed:{
     skillsLimited(){
@@ -190,7 +192,13 @@ export default {
         description: this.form.description,
         created_by: this.$store.state.user.id
       };
-      console.log(values);
+      try {
+        await api.post('/skills', values);
+        this.dialog = false;
+        this.$store.dispatch("addAlert", { color: "success" , message: "Sua skill foi criada com sucesso." });
+      } catch (err) {
+        this.$store.dispatch("addAlert", { color: "error" , message: "Algo deu errado na hora de criar sua skill." });
+      }
     }
   }
 };
