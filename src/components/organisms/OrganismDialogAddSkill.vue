@@ -88,7 +88,7 @@
         <v-select
           v-model="form.tags"
           :items="tags"
-          label="Habilidades que já possui"
+          label="Tags"
           multiple
           chips
           required
@@ -136,6 +136,7 @@ export default {
     form: {name:'',level:'',description: '', resource: [{name:'',description:'',link:''}], tags: []}
   }),
   async created(){
+    this.form.created_by = this.$store.state.user?.email
     const tagsData = await api.get("/tags")
     this.tags = tagsData.data.map(tag=> tag.name)
     console.log(tagsData);
@@ -153,8 +154,7 @@ export default {
         console.error(error);
         this.$store.dispatch("addAlert", {color: "error" , message: "Opss... Erro interno tente mais tarde"});
       }
-      
-
+      this.$emit('close')
     },
     addNewResource(){
       this.form.resource.push({name:'',description:'',link:''})
