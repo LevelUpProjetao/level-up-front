@@ -44,26 +44,39 @@
               </v-card-title>
 
               <v-card-text class="dialog-content">
-                <v-text-field
-                  v-model="form.name"
-                  label="Título da skill"
-                  required
-                  outlined
-                />
-                <v-select
-                  v-model="form.level"
-                  :items="items"
-                  :rules="[v => !!v || 'Item is required']"
-                  label="Nível"
-                  required
-                  outlined
-                />
-                <v-textarea
-                  v-model="form.description"
-                  outlined
-                  name="about"
-                  label="Fale mais sobre essa skill"
-                />
+                <v-form
+                  ref="form"
+                  v-model="valid"
+                  lazy-validation
+                >
+                  <v-text-field
+                    v-model="form.name"
+                    label="Título da skill"
+                    required
+                    outlined
+                    :rules="[
+                      v => !!v || 'A skill precisa de titulo',
+                    ]"
+                  />
+                  <v-select
+                    v-model="form.level"
+                    :items="items"
+                    :rules="[v => !!v || 'Selecione o nivel']"
+                    label="Nível"
+                    required
+                    outlined
+                  />
+                  <v-textarea
+                    v-model="form.description"
+                    outlined
+                    name="about"
+                    label="Fale mais sobre essa skill"
+                    required
+                    :rules="[
+                      v => !!v || 'Descreva um pouco a skill'
+                    ]"
+                  />
+                </v-form>
               </v-card-text>
 
               <v-divider />
@@ -79,7 +92,7 @@
                 <v-spacer />
                 <v-btn
                   color="primary"
-                  @click="dialog = false"
+                  @click="submitForm"
                 >
                   Adicionar
                 </v-btn>
@@ -166,6 +179,18 @@ export default {
   methods:{
     goToLogin(){
       router.push("/login");
+    },
+    async submitForm() {
+      if (!this.$refs.form.validate()) {
+        return;
+      }
+      const values = {
+        name: this.form.name,
+        level: this.form.level,
+        description: this.form.description,
+        created_by: this.$store.state.user.id
+      };
+      console.log(values);
     }
   }
 };
