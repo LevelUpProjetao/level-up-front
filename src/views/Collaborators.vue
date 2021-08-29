@@ -8,10 +8,10 @@
   </div>
   <div class="skills__horizontal-1">
     <div class="skills__header">
-      <span>Skills: {{companyName}}</span>
+      <span>Colaboradores</span>
     </div>
     <div class="skills__button">
-      <v-btn color="primary" elevation="2">Adicionar Skill</v-btn>
+      <v-btn color="primary" elevation="2">Adicionar Colaborador</v-btn>
     </div>
   </div>
   <div class="skills__body-text">
@@ -23,12 +23,7 @@
       :items="data"
       :items-per-page="5"
       class="elevation-1"
-    >
-      <template v-slot:[`item.action`]="{item}">
-        <v-icon v-on:click="openEditDialog(item)">mdi-pencil </v-icon>
-        <v-icon v-on:click="openDeleteDialog(item)" large>mdi-alpha-x </v-icon>
-      </template>
-    </v-data-table>
+    ></v-data-table>
   </div>
 </div>
 </template>
@@ -45,85 +40,86 @@
         companyName: "CIn",
         headers: [
           {
-            text: 'Skills',
+            text: 'Colaborador',
             align: 'start',
             sortable: false,
-            value: 'skills',
+            value: 'colaborator',
           },
-          { text: 'Descrição', value: 'description', sortable: false, },
-          { text: 'Recursos', value: 'recursos', sortable: false, },
-          { text: 'Tags', value: 'tags', sortable: false, },
+          // { text: 'Skills', value: 'skills' },
+          { text: 'Área', value: 'area', sortable: false, },
+          { text: 'Cargo', value: 'cargo', sortable: false, },
+          { text: 'Email', value: 'email', sortable: false, },
           { text: 'Ações', value: 'action', sortable: false, },
         ],
         data: [
           {
-            skills: 'Frozen Yogurt',
-            description: 159,
-            recursos: 'BOB',
-            tags: 'BOB',
-            action: '<v-icon dark>mdi-heart</v-icon>'
-          },
-          {
-            skills: 'Ice cream sandwich',
-            description: 237,
-            recursos: 'BOB',
-            tags: 'BOB',
+            colaborator: 'Frozen Yogurt',
+            area: 159,
+            cargo: 'BOB',
+            email: 'BOB',
             action: 'lapis e xis'
           },
           {
-            skills: 'Eclair',
-            description: 262,
-            recursos: 'BOB',
-            tags: 'BOB',
+            colaborator: 'Ice cream sandwich',
+            area: 237,
+            cargo: 'BOB',
+            email: 'BOB',
             action: 'lapis e xis'
           },
           {
-            skills: 'Cupcake',
-            description: 305,
-            recursos: 'BOB',
-            tags: 'BOB',
+            colaborator: 'Eclair',
+            area: 262,
+            cargo: 'BOB',
+            email: 'BOB',
             action: 'lapis e xis'
           },
           {
-            skills: 'Gingerbread',
-            description: 356,
-            recursos: 'BOB',
-            tags: 'BOB',
+            colaborator: 'Cupcake',
+            area: 305,
+            cargo: 'BOB',
+            email: 'BOB',
             action: 'lapis e xis'
           },
           {
-            skills: 'Jelly bean',
-            description: 375,
-            recursos: 'BOB',
-            tags: 'BOB',
+            colaborator: 'Gingerbread',
+            area: 356,
+            cargo: 'BOB',
+            email: 'BOB',
             action: 'lapis e xis'
           },
           {
-            skills: 'Lollipop',
-            description: 392,
-            recursos: 'BOB',
-            tags: 'BOB',
+            colaborator: 'Jelly bean',
+            area: 375,
+            cargo: 'BOB',
+            email: 'BOB',
             action: 'lapis e xis'
           },
           {
-            skills: 'Honeycomb',
-            description: 408,
-            recursos: 'BOB',
-            tags: 'BOB',
+            colaborator: 'Lollipop',
+            area: 392,
+            cargo: 'BOB',
+            email: 'BOB',
             action: 'lapis e xis'
           },
           {
-            skills: 'Donut',
-            description: 452,
-            recursos: 'BOB',
-            tags: 'BOB',
+            colaborator: 'Honeycomb',
+            area: 408,
+            cargo: 'BOB',
+            email: 'BOB',
             action: 'lapis e xis'
           },
           {
-            skills: 'KitKat',
-            description: 518,
-            recursos: 'BOB',
-            tags: 'BOB',
+            colaborator: 'Donut',
+            area: 452,
+            cargo: 'BOB',
+            email: 'BOB',
+            action: 'lapis e xis'
+          },
+          {
+            colaborator: 'KitKat',
+            area: 518,
+            cargo: 'BOB',
+            email: 'BOB',
             action: 'lapis e xis'
           },
         ],
@@ -134,7 +130,7 @@
 
 <style scoped lang="scss">
   .skills {
-    margin-right: 15%;
+    margin-right: 300px;
     min-width: 500px;
   }
   .skills__back-section {

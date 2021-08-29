@@ -45,6 +45,7 @@
 import OrganismCardUpdatePlatform from "./OrganismCardUpdatePlatform.vue"
 import OrganismDialogAddSkill from "./OrganismDialogAddSkill.vue"
 import OrganismDialogAddContributors from "./OrganismDialogAddContributors.vue"
+import router from '../../router';
 export default {
   name: 'Home',
   components:{
@@ -88,6 +89,9 @@ export default {
       }else if(card.title == 'Adicionar nova skill'){
         console.log('add new skill');
         this.dialogAddSkill = true
+      }else if(card.title == 'Ver todas as skills'){
+        console.log("clicked")
+        router.push('company-skills')
       }
     }
   }
