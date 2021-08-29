@@ -11,12 +11,21 @@
 
       <v-card-text class="dialog-content">
         <v-text-field
-          v-model="title"
+          v-model="form.name"
           label="Nome da Skill"
           required
           outlined
         />
+        <v-select
+          v-model="form.level"
+          :items="level"
+          label="Nível da skill"
+          chips
+          required
+          outlined
+        />
         <v-textarea
+          v-model="form.description"
           outlined
           name="about"
           label="Fale mais sobre essa skill"
@@ -76,6 +85,15 @@
             </v-btn>
           </v-col>
         </v-row>
+        <v-select
+          v-model="form.tags"
+          :items="tags"
+          label="Habilidades que já possui"
+          multiple
+          chips
+          required
+          outlined
+        />
       </v-card-text>
 
       <v-divider />
@@ -91,7 +109,7 @@
         <v-spacer />
         <v-btn
           color="primary"
-          @click="closeDialog"
+          @click="addSkill"
         >
           Adicionar
         </v-btn>
@@ -102,6 +120,7 @@
 
 <script>
 import Vue from 'vue'
+import api from "../../api/axios"
 
 export default {
   name: 'OrganismMySkills',
@@ -112,13 +131,29 @@ export default {
     },
   },
   data: () => ({
-    title: '',
-    items: ["Iniciante", "Intermediário", "Avançado"],
-    form: {title:'',description: '', resource: [{name:'',description:'',link:''}]}
+    tags: [],
+    level: ["Iniciante" , "Básico" , "Intermediário" , "Avançado"],
+    form: {name:'',level:'',description: '', resource: [{name:'',description:'',link:''}], tags: []}
   }),
+  async created(){
+    const tagsData = await api.get("/tags")
+    this.tags = tagsData.data.map(tag=> tag.name)
+    console.log(tagsData);
+  },
   methods: {
     closeDialog(){
       this.$emit('close')
+    },
+    async addSkill(){
+      console.log("adding skill");
+      // console.log(JSON.stringify(this.form,null,2));
+      // try {
+      //   const tagsData = await api.post("/skills",this.form)
+      // } catch (error) {
+      //   console.error(error);
+      // }
+      this.$store.dispatch("addAlert", {color: "error" , message: "Sua skill foi criada com sucesso."});
+
     },
     addNewResource(){
       this.form.resource.push({name:'',description:'',link:''})

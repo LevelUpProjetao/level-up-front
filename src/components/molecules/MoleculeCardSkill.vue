@@ -28,10 +28,6 @@ export default {
         type: Object,
         default: () => {}
       }
-  },
-  
-  created(){
-    console.error(this.skill);
   }
 }
 </script>
