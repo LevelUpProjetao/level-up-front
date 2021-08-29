@@ -36,13 +36,13 @@
 
               <v-card-text class="dialog-content">
                 <v-text-field
-                  v-model="title"
+                  v-model="form.name"
                   label="Título da skill"
                   required
                   outlined
                 />
                 <v-select
-                  v-model="level"
+                  v-model="form.level"
                   :items="items"
                   :rules="[v => !!v || 'Item is required']"
                   label="Nível"
@@ -50,6 +50,7 @@
                   outlined
                 />
                 <v-textarea
+                  v-model="form.description"
                   outlined
                   name="about"
                   label="Fale mais sobre essa skill"
@@ -103,7 +104,8 @@ export default {
 
   data: () => ({
     dialog: false,
-    items: ["Iniciante", "Intermediário", "Avançado"]
+    items: ["Iniciante", "Intermediário", "Avançado"],
+    form: {name: '', level: '',description:""}
   }),
   methods: {
   }

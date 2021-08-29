@@ -2,6 +2,8 @@ import Home from '../views/Home.vue'
 import HomeBusiness from '../views/HomeBusiness.vue'
 import Login from '../views/Login.vue'
 import CourseDetails from '../views/CourseDetails'
+import CompanySkills from '../views/CompanySkills'
+import Colarators from '../views/Colaborators'
 import CollaboratorSkillsList from '../views/CollaboratorSkillsList'
 import CollaboratorFirstAccess from '../views/CollaboratorFirstAccess'
 

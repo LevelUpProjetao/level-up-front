@@ -9,7 +9,7 @@
       <div style="background: rgba(196, 196, 196, 0.22);">
         <v-card-title class="pt-1">
           <h3 class="title_skill">
-            Vue
+            {{ skill.name }}
           </h3>
         </v-card-title>
         <v-card-subtitle class="pb-1">
@@ -24,7 +24,7 @@
               Criado por: 
             </p>
             <p class="proguess_skill text_Color ml-1 my-0">
-              LevelUp
+              {{ createdBy }}
             </p>
           </v-row>
         </v-card-subtitle>
@@ -50,6 +50,28 @@
 </template>
 
 <script>
+export default {
+  
+  props:{
+    skill: {
+      type: Object,
+      default: () => {}
+    },
+  },
+
+  data: () => ({
+    //
+  }),
+  computed: {
+    createdBy(){
+      return this.skill?.created_by || "Level Up"
+    }
+  },
+  created(){
+    console.log('asdsadsad sadas ');
+    console.log(this.skill);
+  }
+};
 </script>
 <style scoped>
 .styleButton{

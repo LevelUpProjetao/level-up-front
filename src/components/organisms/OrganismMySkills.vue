@@ -45,13 +45,13 @@
 
               <v-card-text class="dialog-content">
                 <v-text-field
-                  v-model="title"
+                  v-model="form.name"
                   label="Título da skill"
                   required
                   outlined
                 />
                 <v-select
-                  v-model="level"
+                  v-model="form.level"
                   :items="items"
                   :rules="[v => !!v || 'Item is required']"
                   label="Nível"
@@ -59,6 +59,7 @@
                   outlined
                 />
                 <v-textarea
+                  v-model="form.description"
                   outlined
                   name="about"
                   label="Fale mais sobre essa skill"
@@ -89,10 +90,10 @@
       </v-col>
     </v-row>
     <v-row
-      v-if="true"
+      v-if="!viewCollaborator"
     >
       <v-col
-        v-for="(skill, index) in skills"
+        v-for="(skill, index) in skillsLimited"
         :key="index"
         cols="4"
       >
@@ -101,7 +102,7 @@
     </v-row>
     <v-row v-else>
       <v-col
-        v-for="index in 6"
+        v-for="(skill, index) in skillsLimited"
         :key="index"
         cols="2"
         md="4"
@@ -121,6 +122,10 @@ export default {
     MoleculeCardSkill
   },
   props:{
+    viewCollaborator: {
+      type: Boolean,
+      default: () => true
+    },
     skills: {
       type: Array,
       default: () => []
@@ -132,8 +137,29 @@ export default {
   },
   data: () => ({
     dialog: false,
-    items: ["Iniciante", "Intermediário", "Avançado"]
+    items: ["Iniciante", "Intermediário", "Avançado"],
+    form: {name: '', level: '',description:""}
   }),
+  computed:{
+    skillsLimited(){
+      if(Array.isArray(this.skills)){
+        let limit
+        if(!this.viewCollaborator){
+          return this.skills
+        }
+        else if(this.$vuetify.breakpoint.mdAndDown){
+          limit = 6
+        }else if(this.$vuetify.breakpoint.lgAndUp){
+          limit = 12
+        }
+        let array = this.skills.slice(0,limit)
+        console.log(array);
+        return array
+      }else{
+        return []
+      }
+    }
+  },
   created(){
     console.log(this.skills);
   },
