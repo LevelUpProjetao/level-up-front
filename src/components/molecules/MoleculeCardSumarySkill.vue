@@ -6,7 +6,7 @@
   >
     <div class="centerItem">
       <div class="div_left_color" />
-      <div style="background: rgba(196, 196, 196, 0.22);">
+      <div style="background: rgba(196, 196, 196, 0.22); width:100%">
         <v-card-title class="pt-1">
           <h3 class="title_skill">
             {{ skill.name }}
@@ -34,14 +34,14 @@
             small
             class="styleButton"
           >
-            Iniciante
+            {{ skill.level }}
           </v-btn>
           <v-btn
             color="primary"
             small
             class="styleButton"
           >
-            Organização
+            Level Up
           </v-btn>
         </v-card-actions>
       </div>
