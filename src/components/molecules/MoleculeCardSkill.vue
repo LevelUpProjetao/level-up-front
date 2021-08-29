@@ -1,11 +1,14 @@
 <template>
   <v-card
+    style="cursor: pointer"
     class="mx-auto"
     max-width="344"
+    min-height="200"
+    max-height="200"
   >
     <v-card-title>
       <h3 class="title_skill">
-        {{ skill.name }}
+        {{ skill.name || 'titutlo' }}
       </h3>
     </v-card-title>
     <v-card-subtitle>
@@ -14,8 +17,10 @@
       </h4>
     </v-card-subtitle>
     <v-card-text>
-      <p class="text_skill">
-        Greyhound divisively hello coldly wonderfully marginally far upon excluding.
+      <p
+        class="text_skill mb-0 d-flex-inline"
+      >
+        {{ getDescription }} 
       </p>
     </v-card-text>
   </v-card>
@@ -28,6 +33,20 @@ export default {
         type: Object,
         default: () => {}
       }
+  },
+  
+  computed: {
+    getDescription(){
+      const description = this.skill.description
+      if(description.length>100){
+        return description.slice(0,99) + "..." 
+      }else{
+        return description
+      }
+      
+    }
+
+
   }
 }
 </script>
