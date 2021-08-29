@@ -43,8 +43,7 @@ router.beforeEach((to, from, next) => {
   } else {
     const role = store.state.user.systemRole;
     if (role === 'collaborator' && isFirstLogin && to.fullPath !== '/collaborator-first-access') {
-      next();
-      // next('/collaborator-first-access');
+      next('/collaborator-first-access');
     } else if (allowedPaths[role].indexOf(to.fullPath) !== -1) {
       next();
     } else {
