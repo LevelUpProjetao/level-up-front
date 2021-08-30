@@ -111,7 +111,9 @@
         :key="index"
         cols="4"
       >
-        <MoleculeCardSkill :skill="skill" />
+        <div @click="goToCourseDetails">
+          <MoleculeCardSkill :skill="skill" />
+        </div>
       </v-col>
     </v-row>
     <v-row v-else>
@@ -122,7 +124,12 @@
         md="4"
         lg="2"
       >
-        <MoleculeCardSkill :skill="skill" />
+        <div @click="goToCourseDetails(skill)">
+          <MoleculeCardSkill
+            :skill="skill"
+            @click="goToCourseDetails(skill)"
+          />
+        </div>
       </v-col>
     </v-row>
   </div>
@@ -131,6 +138,7 @@
 <script>
 import MoleculeCardSkill from "../molecules/MoleculeCardSkill.vue"
 import api from "../../api/axios"
+  import router from "../../router";
 export default {
   name: 'OrganismMySkills',
   components:{
@@ -179,6 +187,13 @@ export default {
     console.log(this.skills);
   },
   methods:{
+    goToCourseDetails (skill) {
+      console.log(skill)
+      this.$router.push({
+        name: 'course',
+        params: { data: skill}
+      });
+    },
     goToLogin(){
       router.push("/login");
     },
