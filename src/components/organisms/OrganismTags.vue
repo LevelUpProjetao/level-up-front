@@ -14,8 +14,9 @@
     </v-row>
     <v-row class="ml-0">
       <molecule-tags-chips
-        v-for="index in 10"
-        :key="index"
+        v-for="tag in tags"
+        :key="tag"
+        :tag="tag"
       />
     </v-row>
   </div>
@@ -26,7 +27,13 @@ import MoleculeTagsChips from '../molecules/MoleculeTagChips.vue'
 export default {
   components: {
     MoleculeTagsChips
-  }
+  },
+  props:{
+    tags: {
+      type: Array,
+      default: () => []
+    }
+  },
 
 }
 </script>

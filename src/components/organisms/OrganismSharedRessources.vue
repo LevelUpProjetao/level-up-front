@@ -28,21 +28,13 @@
     </v-row>
     <v-row>
       <v-col
-        v-for="index in 10"
-        :key="index"
+        v-for="resourceId in resources"
+        :key="resourceId"
         cols="4"
       >
-        <div @click="openRessource">
-          <molecule-ressource />
-        </div>
+        <molecule-ressource :resource-id="resourceId" />
       </v-col>
     </v-row>
-    <v-dialog 
-      v-model="openRessourceDialog"
-      max-width="500"
-    >
-      <molecule-ressource-dialog @close="closeRessourceDialog" />
-    </v-dialog>
     <v-dialog 
       v-model="openShareRessourceDialog"
       max-width="500"
@@ -54,25 +46,22 @@
 
 <script>
 import MoleculeRessource from '../molecules/MoleculeRessource.vue'
-import MoleculeRessourceDialog from '../molecules/MoleculeRessourceDialog.vue'
 import MoleculeShareRessourceDialog from '../molecules/MoleculeShareRessourceDialog.vue'
 export default {
   components: {
     MoleculeRessource,
-    MoleculeRessourceDialog,
     MoleculeShareRessourceDialog
   },
+  props:{
+    resources: {
+      type: Array,
+      default: () => []
+    }
+  },
   data: () => ({
-    openRessourceDialog: false,
     openShareRessourceDialog: false
   }),
   methods: {
-    openRessource () {
-      this.openRessourceDialog = true
-    },
-    closeRessourceDialog () {
-      this.openRessourceDialog = false
-    },
     openShareRessource () {
       this.openShareRessourceDialog = true
     },

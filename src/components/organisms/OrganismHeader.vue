@@ -23,7 +23,7 @@
       <MoleculeUserPhoto :url="$store.state.user.photo" />
       
       <h3 class="ml-3">
-        {{this.$store.state.user.name}}
+        {{ this.$store.state.user.name }}
       </h3>
 
       <button 

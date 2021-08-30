@@ -8,11 +8,11 @@
     >
       <v-col cols="auto">
         <h1 class="textTitle">
-          Oratória
+          {{ skillInfo.name }}
         </h1>
         <h6 class="ml-1">
           criado por:
-          <a> LevelUp</a>
+          <a> {{ skillInfo.created_by === "plataform" ? "LevelUp" : skillInfo.created_by }}</a>
         </h6>
       </v-col>
       <v-col cols="auto">
@@ -29,18 +29,16 @@
     </v-row>
     <v-row>
       <p class="ml-4">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Proin convallis blandit orci at euismod. Mauris augue nunc, rhoncus non suscipit eu, mattis quis justo.
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin elit odio, aliquet at libero at, luctus vulputate leo.
+        {{ skillInfo.description }}
       </p>
     </v-row>
     <v-row>
       <v-col
-        v-for="index in 10"
-        :key="index"
+        v-for="resourceId in skillInfo.resources"
+        :key="resourceId"
         cols="4"
       >
-        <molecule-ressource />
+        <molecule-ressource :resource-id="resourceId" />
       </v-col>
     </v-row>
   </div>
@@ -51,8 +49,13 @@ import MoleculeRessource from '../molecules/MoleculeRessource.vue'
 export default {
   components: {
     MoleculeRessource
-  }
-
+  },
+  props:{
+    skillInfo: {
+      type: Object,
+      default: () => {}
+    }
+  },
 }
 </script>
 
