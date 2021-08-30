@@ -41,7 +41,9 @@
         lg="4"
         class="pa-0"
       >
-        <MoleculeCardSummarySkill :skill="skill" />
+        <div @click="goToCourseDetails(skill)">
+          <MoleculeCardSummarySkill :skill="skill" />
+        </div>
       </v-col>
     </v-row>
   </div>
@@ -79,7 +81,13 @@ export default {
     },
     goToLogin(){
       router.push("/login");
-    }
+    },
+    goToCourseDetails (skill) {
+      this.$router.push({
+        name: 'course',
+        params: { data: skill}
+      });
+    },
   }
 };
 </script>

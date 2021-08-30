@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title class="text-h5 font-weight-bold lighten-2">
-      {{ resource.name }}
+      {{ resourceInfo.name }}
     </v-card-title>
     <v-row
       no-gutters
@@ -43,7 +43,7 @@
       >
         <v-col cols="auto">
           <p>
-            {{ resource.description }}
+            {{ resourceInfo.description }}
           </p>
         </v-col>
       </v-row>
@@ -67,7 +67,7 @@
       <v-btn
         color="primary"
         target="_blank"
-        :href="resource.link"
+        :href="resourceInfo.link"
       >
         acessar link
       </v-btn>
@@ -78,7 +78,7 @@
 <script>
 export default {
   props:{
-    resource: {
+    resourceInfo: {
       type: Object,
       default: () => {}
     }

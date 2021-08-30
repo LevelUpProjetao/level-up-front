@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="resource">
     <v-card
       :title="resource.name"
       color="white"
@@ -18,7 +18,7 @@
       max-width="500"
     >
       <molecule-ressource-dialog
-        :resource="resource"
+        :resource-info="resource"
         @close="closeRessourceDialog"
       />
     </v-dialog>
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import api from "../../api/axios"
 import MoleculeRessourceDialog from '../molecules/MoleculeRessourceDialog.vue'
 
 export default {
@@ -34,19 +33,14 @@ export default {
     MoleculeRessourceDialog
   },
   props:{
-    resourceId: {
-      type: String,
-      default: () => ""
+    resource: {
+      type: Object,
+      default: () => {}
     }
   },
   data: () => ({
-    openRessourceDialog: false,
-    resource: undefined
+    openRessourceDialog: false
   }),
-  async created () {
-    this.resource = (await api.get(`/resources/${this.resourceId}`)).data
-    console.log(this.resource)
-  },
   methods: {
     openRessource () {
       this.openRessourceDialog = true
@@ -60,6 +54,7 @@ export default {
 
 <style scoped>
 .resource-title {
+  font-size: 15px;
   text-overflow: ellipsis; 
   overflow: hidden;
   white-space: nowrap;

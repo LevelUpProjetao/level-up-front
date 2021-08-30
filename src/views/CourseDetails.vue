@@ -1,5 +1,8 @@
 <template>
-  <v-row justify="space-between">
+  <v-row
+    v-if="resources"
+    justify="space-between"
+  >
     <v-col cols="12">
       <div
         class="skills__back-section"
@@ -15,10 +18,13 @@
       <organism-course
         class="mb-3"
         :skill-info="skillInfo"
+        :resources="resources.initial_resources"
       />
       <organism-shared-ressources
         class="mb-3"
-        :resources="skillInfo.resources"
+        :skill-id="skillInfo.id"
+        :resources="resources.shared_resources"
+        @updateResource="updateResource"
       />
       <organism-tags :tags="skillInfo.tags" />
     </v-col>
@@ -33,6 +39,8 @@ import OrganismCourse from '../components/organisms/OrganismCourse.vue'
 import OrganismSharedRessources from '../components/organisms/OrganismSharedRessources.vue'
 import OrganismTags from '../components/organisms/OrganismTags.vue'
 import OrganismSimillarSkills from '../components/organisms/OrganismSimillarSkills.vue'
+import api from "../api/axios"
+import router from "../router"
 
 export default {
   name: 'SimillarSkills',
@@ -43,16 +51,19 @@ export default {
   OrganismSimillarSkills
   },
   data: () => ({
-    skillInfo: null
+    skillInfo: null,
+    resources: null
   }),
-  created() {
-    console.log('Params: ', this.$route.params);
+  async created() {
     this.skillInfo = this.$route.params.data;
-    console.log(this.skillInfo)
+    this.resources = (await api.get(`/skills/${this.skillInfo.id}/resources`)).data
 },
   methods:{
     goToHome(){
       router.push("/home");
+    },
+    async updateResource () {
+      this.resources = (await api.get(`/skills/${this.skillInfo.id}/resources`)).data
     }
   }
 }
