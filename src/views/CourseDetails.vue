@@ -12,12 +12,18 @@
       </div>
     </v-col>
     <v-col cols="8">
-      <organism-course class="mb-3" />
-      <organism-shared-ressources class="mb-3" />
-      <organism-tags />
+      <organism-course
+        class="mb-3"
+        :skill-info="skillInfo"
+      />
+      <organism-shared-ressources
+        class="mb-3"
+        :resources="skillInfo.resources"
+      />
+      <organism-tags :tags="skillInfo.tags" />
     </v-col>
     <v-col cols="4">
-      <organism-simillar-skills />
+      <organism-simillar-skills :skill-id="skillInfo.id" />
     </v-col>
   </v-row>
 </template>
@@ -37,8 +43,13 @@ export default {
   OrganismSimillarSkills
   },
   data: () => ({
-    //
+    skillInfo: null
   }),
+  created() {
+    console.log('Params: ', this.$route.params);
+    this.skillInfo = this.$route.params.data;
+    console.log(this.skillInfo)
+},
   methods:{
     goToHome(){
       router.push("/home");

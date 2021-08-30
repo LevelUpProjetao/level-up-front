@@ -6,13 +6,18 @@
     color="#00CCD6"
     label
   >
-    Tag Example
+    {{ tag }}
   </v-chip>
 </template>
 
 <script>
 export default {
-
+  props:{
+    tag: {
+      type: String,
+      default: () => ""
+    }
+  }
 }
 </script>
 

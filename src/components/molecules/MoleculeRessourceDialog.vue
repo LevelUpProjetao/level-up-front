@@ -1,31 +1,8 @@
 <template>
   <v-card>
-    <v-row
-      class="pt-3"
-      no-gutters
-      align="center"
-      align-content="center"
-      justify="space-between"
-    >
-      <v-col cols="10">
-        <v-card-title class="text-h5 font-weight-bold lighten-2">
-          Modelo de Apresentação
-        </v-card-title>
-      </v-col>
-      <v-col cols="2">
-        <v-btn
-          outlined
-          color="primary"
-          class="ml-2 text-none"
-          style="textButton"
-          @click="closeDialog"
-        >
-          <v-icon small>
-            mdi-close
-          </v-icon>
-        </v-btn>
-      </v-col>
-    </v-row>
+    <v-card-title class="text-h5 font-weight-bold lighten-2">
+      {{ resource.name }}
+    </v-card-title>
     <v-row
       no-gutters
       align="center"
@@ -66,9 +43,7 @@
       >
         <v-col cols="auto">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin convallis blandit orci at euismod.
-            Mauris augue nunc, rhoncus non suscipit eu, mattis quis justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Proin elit odio, aliquet at libero at, luctus vulputate leo.
+            {{ resource.description }}
           </p>
         </v-col>
       </v-row>
@@ -79,25 +54,35 @@
     <v-divider />
 
     <v-card-actions>
-      <v-row
-        no-gutters
-        align="center"
-        align-content="center"
-        justify="center"
+      <v-btn
+        text
+        color="primary"
+        class="ml-2 text-none"
+        style="textButton"
+        @click="closeDialog"
       >
-        <v-btn
-          color="primary"
-          @click="closeDialog"
-        >
-          acessar link
-        </v-btn>
-      </v-row>
+        Fechar
+      </v-btn>
+      <v-spacer />
+      <v-btn
+        color="primary"
+        target="_blank"
+        :href="resource.link"
+      >
+        acessar link
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
 export default {
+  props:{
+    resource: {
+      type: Object,
+      default: () => {}
+    }
+  },
   methods : {
     closeDialog () {
       this.$emit('close')
