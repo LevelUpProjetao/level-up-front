@@ -15,12 +15,13 @@ const allowedPaths = {
     '/home',
     '/coursedetails',
     '/collaborator-skills',
-    '/collaborator-first-access'
+    '/collaborator-first-access',
   ],
   'company': [
     '/home-business',
     '/coursedetails',
     '/company-skills',
+    '/collaborators'
   ],
 }
 
