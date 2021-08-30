@@ -115,7 +115,6 @@
               tags: tagText,
               action: '<v-icon dark>mdi-heart</v-icon>'
           });
-        console.log("else")
         Promise.all(promises).then(r => {
           r.forEach(aux => {
             recursoText += aux.data.link + '\n';

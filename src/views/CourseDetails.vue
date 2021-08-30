@@ -56,14 +56,19 @@ export default {
   }),
   async created() {
     this.skillInfo = this.$route.params.data;
-    this.resources = (await api.get(`/skills/${this.skillInfo.id}/resources`)).data
+    console.log(this.skillInfo);
+    if(this.skillInfo?.name){
+      this.resources = (await api.get(`/skills/${this.skillInfo?.name + ' | ' + this.skillInfo?.level}/resources`)).data
+    }
 },
   methods:{
     goToHome(){
       router.push("/home");
     },
     async updateResource () {
-      this.resources = (await api.get(`/skills/${this.skillInfo.id}/resources`)).data
+      if(this.skillInfo?.name){
+        this.resources = (await api.get(`/skills/${this.skillInfo?.name + ' | ' + this.skillInfo?.level}/resources`)).data
+      }
     }
   }
 }

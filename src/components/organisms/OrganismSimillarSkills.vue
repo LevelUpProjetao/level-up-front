@@ -33,8 +33,10 @@ export default {
     simillarSkills: []
   }),
   async created () {
-    this.simillarSkills = (await api.get(`/skills/${this.skillId}/similar`)).data
-    console.log(this.simillarSkills)
+    if(this.skillId){
+      this.simillarSkills = (await api.get(`/skills/${this.skillId}/similar`)).data
+    }
+    
   }
 
 }

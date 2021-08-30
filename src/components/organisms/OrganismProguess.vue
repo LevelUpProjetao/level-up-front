@@ -58,10 +58,10 @@ export default {
   }),
   computed:{
     getValue(){
-      if(this.resourceCounts == 0){
+      if(this.total_skills == 0){
         return 0
       }else{
-        return (this.finilized_skills/this.resourceCounts)*100
+        return Math.ceil((this.finilized_skills/this.total_skills)*100)
       }
     }
   },
@@ -73,7 +73,7 @@ export default {
     this.finilized_skills = skillsCounts.finilized_skills
     this.total_skills = skillsCounts.total_skills
     const resourceCounts = (await api.get(`/users/${this.$store.state.user.email}/resources_count`)).data
-    console.log(resourceCounts);
+    console.log("resourceCounts ", resourceCounts);
   }
 };
 </script>

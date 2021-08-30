@@ -35,10 +35,10 @@
       <v-col
         v-for="(skill,index) in getSkill"
         :key="index"
-        cols="auto"
-        sm="auto"
-        md="auto"
-        lg="4"
+        cols="12"
+        sm="12"
+        md="12"
+        lg="6"
         class="pa-0"
       >
         <div @click="goToCourseDetails(skill)">

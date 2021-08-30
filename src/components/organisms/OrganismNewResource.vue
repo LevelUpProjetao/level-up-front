@@ -40,7 +40,7 @@
               >
                 <div style="width: 90%">
                   <h3>{{ resource.skill_name }}</h3>
-                  <span style="width:20px">{{ resource.user_name }}, {{ resource.user_role || "ADM" }}, compartilhou um link em {{ resource.skill_tags[0] }}</span>
+                  <span style="width:20px">{{ resource.user_name }}, {{ resource.user_role || "ADM" }}, compartilhou um recurso em {{ resource.skill_tags[0] }}</span>
                   <div />
                 </div>
               </v-col>
