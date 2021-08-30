@@ -31,15 +31,13 @@
       </div>
     </div>
     <div class="skills__body-text">
-      <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi omnis
-        neque incidunt porro perspiciatis repudiandae illo quibusdam facere
-        quasi rem?</span>
+      <span>Visualize, edite e adicione skills para os seus colaboradores.</span>
     </div>
     <div class="skills__table">
       <v-data-table
         :headers="headers"
         :items="data"
-        :items-per-page="5"
+        :items-per-page="1000"
         class="elevation-1"
       >
         <template v-slot:[`item.action`]="{ item }">
@@ -80,7 +78,7 @@
           description: '',
           resource: [{name:'',description:'',link:''}],
         },
-        companyName: "CIn",
+        companyName: "Level Up",
         headers: [
           {
             text: 'Skills',
@@ -172,7 +170,6 @@
 }
 .skills__back-section span {
   color: rgba(0, 0, 0, 0.54);
-  font-family: Inter;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
@@ -185,7 +182,6 @@
   margin-bottom: 29px;
 }
 .skills__header {
-  font-family: Inter;
   font-style: normal;
   font-weight: bold;
   font-size: 35px;

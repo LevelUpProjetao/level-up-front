@@ -40,7 +40,7 @@
               >
                 <div style="width: 90%">
                   <h3>{{ resource.skill_name }}</h3>
-                  <span style="width:20px">{{ resource.user_name }}, {{ resource.user_role }}, compartilhou um link em {{ resource.skill_tags[0] }}</span>
+                  <span style="width:20px">{{ resource.user_name }}, {{ resource.user_role || "ADM" }}, compartilhou um link em {{ resource.skill_tags[0] }}</span>
                   <div />
                 </div>
               </v-col>
@@ -81,12 +81,14 @@ export default {
     resources: [],
   }),
    async created(){
+     console.log('criando');
     const last_resources = (await api.get(`/companies/1Ig0FWZqjbANqiOiVUak/last_resources`)).data
     for (const resource of last_resources) {
       console.log(resource.created_by);
       const user = (await api.get(`/users/${resource.created_by}`)).data 
       resource.user = user
     }
+    console.log('last_resources');
     console.log(last_resources);
     this.resources = last_resources
   },

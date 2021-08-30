@@ -16,6 +16,18 @@
       <div class="skills__button">
         <v-btn
           color="primary"
+          outlined
+          class="mr-5"
+          text
+          @click="showDialogInputCSV"
+        >
+          <v-icon left>
+            mdi-file
+          </v-icon>
+          Importar CSV
+        </v-btn>
+        <v-btn
+          color="primary"
           elevation="2"
           @click="showDialog"
         >
@@ -24,13 +36,13 @@
       </div>
     </div>
     <div class="skills__body-text">
-      <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi omnis neque incidunt porro perspiciatis repudiandae illo quibusdam facere quasi rem?</span>
+      <span>Visualize, edite e adicione colaboradores.</span>
     </div>
     <div class="skills__table">
       <v-data-table
         :headers="headers"
         :items="data"
-        :items-per-page="5"
+        :items-per-page="100"
         class="elevation-1"
       />
     </div>
@@ -38,20 +50,27 @@
       :dialog="dialogAddContributors"
       @close="closeDialog"
     />
+    <OrganismDialogAddCSV
+      :dialog="dialogAddCSV"
+      @close="closeDialogCSV"
+    />
   </div>
 </template>
 <script>
   import router from "../router";
   import api from "../api/axios";
   import OrganismDialogAddContributors from "../components/organisms/OrganismDialogAddContributors.vue"
+  import OrganismDialogAddCSV from "../components/organisms/OrganismDialogAddCSV.vue"
   export default {
     
     components:{
-      OrganismDialogAddContributors
+      OrganismDialogAddContributors,
+      OrganismDialogAddCSV
     },
     data () {
       return {
         companyName: "CIn",
+        dialogAddCSV: false,
         dialogAddContributors: false,
         headers: [
           {
@@ -84,6 +103,12 @@
       }
     },
     methods: {
+      showDialogInputCSV(){
+        this.dialogAddCSV = true
+      },
+      closeDialogCSV(){
+        this.dialogAddCSV = falase
+      },
       closeDialog(){
         this.dialogAddContributors = false
         this.$store.dispatch("setShowDialogCollaborator", false)
@@ -111,7 +136,6 @@
   }
   .skills__back-section span{
     color: rgba(0, 0, 0, 0.54);
-    font-family: Inter;
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
@@ -124,14 +148,13 @@
     margin-bottom: 29px;
   }
   .skills__header {
-    font-family: Inter;
     font-style: normal;
     font-weight: bold;
     font-size: 35px;
     line-height: 133%;
   }
   .skills__body-text {
-    font-family: Roboto;
+    font-family: "Roboto";
     font-style: normal;
     font-weight: normal;
     font-size: 18px;

@@ -152,7 +152,8 @@ export default {
     }
   },
   async created(){
-    this.skills = (await api.get("/skills")).data
+    this.skills = (await api.get(`/users/${this.$store.state.user.email}/skills`)).data
+    // this.skills = (await api.get("/skills")).data
     console.log('skills: ' , this.skills)
   },
   methods: {

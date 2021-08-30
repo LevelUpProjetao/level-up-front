@@ -12,7 +12,7 @@
             Atualizar plataforma
           </h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin convallis blandit orci at euismod.
+            Realize ações para adicionar/editar colaboradores e atualizar as skills da empresa.
           </p>
         </v-col>
       </v-row>
@@ -55,22 +55,22 @@ export default {
       {
         img: 'seeContributor.png',
         title: 'Ver todos Colaboradores(as)',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin convallis blandit orci at euismod.'
+        description: 'Visualize, edite e adicione colaboradores.'
       },
       {
         img: 'addCollaborator.png',
         title: 'Adicionar Colaborador(a)',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin convallis blandit orci at euismod.'
+        description: 'Adicione um novo colaborador para ter acesso a plataforma.'
       },
       {
         img: 'seeSkills.png',
         title: 'Ver todas as skills',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin convallis blandit orci at euismod.'
+        description: 'Visualize, edite e adicione skills para os seus colaboradores.'
       },
       {
         img: 'newSkill.png',
         title: 'Adicionar nova skill',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin convallis blandit orci at euismod.'
+        description: 'Adicione uma nova skill para os seus colaboradores.'
       }
     ]
   }),
