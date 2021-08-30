@@ -22,16 +22,15 @@
       <v-col cols="auto">
         <v-avatar
           class="ml-4"
-          color="primary"
+          color="grey"
           size="48"
-        />
+        >
+          <v-icon> mdi-account </v-icon>
+        </v-avatar>
       </v-col>
       <v-col>
         <div class="ml-3">
-          <h5> Jorge </h5>
-        </div>
-        <div class="ml-3">
-          <h6> Eng. Software </h6>
+          <h5> {{!resourceInfo.created_by ? "Usuário Anônimo" : (resourceInfo.created_by === "platform" ? "LevelUp" : resourceInfo.created_by) }} </h5>
         </div>
       </v-col>
       <v-row
