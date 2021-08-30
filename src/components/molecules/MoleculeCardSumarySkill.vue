@@ -33,6 +33,7 @@
             color="primary"
             small
             class="styleButton"
+            style="cursor: default"
           >
             {{ skill.level }}
           </v-btn>
@@ -40,6 +41,7 @@
             color="primary"
             small
             class="styleButton"
+            style="cursor: default"
           >
             Level Up
           </v-btn>

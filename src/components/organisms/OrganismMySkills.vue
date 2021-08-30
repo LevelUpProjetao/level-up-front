@@ -8,7 +8,7 @@
     >
       <v-col cols="auto">
         <h2 class="textTitle">
-          Minhas skills
+          {{ getTitle }}
         </h2>
       </v-col>
       <v-col
@@ -160,15 +160,19 @@ export default {
   },
   data: () => ({
     dialog: false,
+    valid: false,
     items: ["Iniciante", "Intermediário", "Avançado"],
     form: {name: '', level: '',description:""}
   }),
   computed:{
+    getTitle(){
+      return !this.viewCollaborator? "Olá " + this.$store.state.user.name : "Minhas Skills"
+    },
     skillsLimited(){
       if(Array.isArray(this.skills)){
         let limit
         if(!this.viewCollaborator){
-          return this.skills
+          return this.skills.slice(0,6)
         }
         else if(this.$vuetify.breakpoint.mdAndDown){
           limit = 6
@@ -182,9 +186,6 @@ export default {
         return []
       }
     }
-  },
-  created(){
-    console.log(this.skills);
   },
   methods:{
     goToCourseDetails (skill) {

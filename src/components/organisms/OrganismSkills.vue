@@ -22,7 +22,7 @@
             class="textSeeMore text-none"
             @click="seeAllFunction"
           >
-            Ver todas
+            {{ !seeAll? "Ver todas" : "Ver menos" }}
           </v-btn>
         </div>
       </v-col>

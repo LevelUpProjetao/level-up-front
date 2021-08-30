@@ -13,7 +13,7 @@
     </v-card-title>
     <v-card-subtitle>
       <h4 class="proguess_skill">
-        Em progresso
+        {{ getStatus }}
       </h4>
     </v-card-subtitle>
     <v-card-text>
@@ -36,6 +36,22 @@ export default {
   },
   
   computed: {
+    getStatus(){
+      if(this.skill.status){
+        return this.skill.status
+      }else{
+        if(this.skill?.users_in_progress){
+          if(this.skill?.users_in_progress>1){
+            return this.skill?.users_in_progress["1Ig0FWZqjbANqiOiVUak"] + " Colaboradores"
+          }else{
+            return this.skill?.users_in_progress["1Ig0FWZqjbANqiOiVUak"] + " Colaborador"
+          }
+        }else{
+          return 0 + " Colaborador"
+        }
+        // return 2
+      }
+    },
     getDescription(){
       const description = this.skill.description
       if(description.length>80){
@@ -62,7 +78,7 @@ export default {
     font-weight: normal;
     font-size: 14px;
     line-height: 22px;
-    color:red
+    color:#6C63FF
 }
 .text_skill{
     

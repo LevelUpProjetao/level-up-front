@@ -1,23 +1,33 @@
 <template>
-  <div>
+  <div
+    class="sizeInfoGeneral"
+    style="background:white"
+  >
     <p
-      style="background:white"
-      class="mb-0 textInfoGeneral"
+      class="mb-0 ml-3 textInfoGeneral"
     >
-      11
+      {{ number }}
     </p>
     <p
-      style="background:white"
-      class="textInfoGeneral"
+      class="textInfoGeneral ml-3"
     >
-      Colaboradores
+      {{ text }}
     </p>
   </div>
 </template>
 
 <script>
-import MoleculeCardSummarySkill from "./MoleculeCardSumarySkill.vue"
 export default {
+  props:{
+    number: {
+      type: Number,
+      default: () => 20
+    },
+    text: {
+      type: String,
+      default: () => " Colaboradores"
+    },
+  },
   
   data: () => ({
     //
@@ -36,6 +46,11 @@ export default {
   letter-spacing: 0em;
   text-align: left;
   color: #263238;
+}
+
+.sizeInfoGeneral{
+  width: 150px;
+  height: 100px;
 
 }
 
