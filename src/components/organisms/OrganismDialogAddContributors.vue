@@ -23,8 +23,14 @@
           outlined
         />
         <v-text-field
-          v-model="form.cargo"
+          v-model="form.role"
           label="Cargo"
+          required
+          outlined
+        />
+        <v-text-field
+          v-model="form.level"
+          label="Nível"
           required
           outlined
         />
@@ -49,7 +55,7 @@
         <v-spacer />
         <v-btn
           color="primary"
-          @click="closeDialog"
+          @click="addContributors"
         >
           Adicionar
         </v-btn>
@@ -60,6 +66,7 @@
 
 <script>
 import Vue from 'vue'
+import api from "../../api/axios"
 
 export default {
   name: 'OrganismMySkills',
@@ -72,18 +79,23 @@ export default {
   data: () => ({
     title: '',
     items: ["Iniciante", "Intermediário", "Avançado"],
-    form: {name:'',cargo: '', area:'', email:''}
+    form: {name:'',role: '', level:'', area:'', email:'', company_id:"1Ig0FWZqjbANqiOiVUak", is_admin:false}
   }),
   methods: {
+    async addContributors(){
+      console.log("adding skill");
+      try {
+        const tagsData = await api.post("/users",this.form)
+        this.$store.dispatch("addAlert", {color: "success" , message: "Colaborador adicionado com sucesso."});
+      } catch (error) {
+        console.error(error);
+        this.$store.dispatch("addAlert", {color: "error" , message: "Opss... Erro interno tente mais tarde"});
+      }
+      this.$emit('close')
+    },
     closeDialog(){
       this.$emit('close')
     },
-    addNewResource(){
-      this.form.resource.push({name:'',description:'',link:''})
-    },
-    removeNewResource(index){
-      this.form.resource.splice(index,1)
-    }
   }
 };
 </script>

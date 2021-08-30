@@ -1,130 +1,100 @@
 <template>
-<div class = "skills">
-  <div class="skills__back-section"  v-on:click="navigateToOverview()">
-    <v-icon>
-      mdi-arrow-left
-    </v-icon>
-    <span>Voltar para Overview</span>
-  </div>
-  <div class="skills__horizontal-1">
-    <div class="skills__header">
-      <span>Colaboradores</span>
+  <div class="skills">
+    <div
+      class="skills__back-section"
+      @click="navigateToOverview()"
+    >
+      <v-icon>
+        mdi-arrow-left
+      </v-icon>
+      <span>Voltar para Overview</span>
     </div>
-    <div class="skills__button">
-      <v-btn color="primary" elevation="2">Adicionar Colaborador</v-btn>
+    <div class="skills__horizontal-1">
+      <div class="skills__header">
+        <span>Colaboradores</span>
+      </div>
+      <div class="skills__button">
+        <v-btn
+          color="primary"
+          elevation="2"
+          @click="showDialog"
+        >
+          Adicionar Colaborador
+        </v-btn>
+      </div>
     </div>
+    <div class="skills__body-text">
+      <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi omnis neque incidunt porro perspiciatis repudiandae illo quibusdam facere quasi rem?</span>
+    </div>
+    <div class="skills__table">
+      <v-data-table
+        :headers="headers"
+        :items="data"
+        :items-per-page="5"
+        class="elevation-1"
+      />
+    </div>
+    <OrganismDialogAddContributors
+      :dialog="dialogAddContributors"
+      @close="closeDialog"
+    />
   </div>
-  <div class="skills__body-text">
-    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi omnis neque incidunt porro perspiciatis repudiandae illo quibusdam facere quasi rem?</span>
-  </div>
-  <div class="skills__table">
-    <v-data-table
-      :headers="headers"
-      :items="data"
-      :items-per-page="5"
-      class="elevation-1"
-    ></v-data-table>
-  </div>
-</div>
 </template>
 <script>
   import router from "../router";
+  import api from "../api/axios";
+  import OrganismDialogAddContributors from "../components/organisms/OrganismDialogAddContributors.vue"
   export default {
-    methods: {
-      navigateToOverview() {
-        router.push('home')
-      }
+    
+    components:{
+      OrganismDialogAddContributors
     },
     data () {
       return {
         companyName: "CIn",
+        dialogAddContributors: false,
         headers: [
           {
             text: 'Colaborador',
             align: 'start',
             sortable: false,
-            value: 'colaborator',
+            value: 'name',
           },
-          // { text: 'Skills', value: 'skills' },
           { text: 'Área', value: 'area', sortable: false, },
-          { text: 'Cargo', value: 'cargo', sortable: false, },
+          { text: 'Cargo', value: 'role', sortable: false, },
           { text: 'Email', value: 'email', sortable: false, },
-          { text: 'Ações', value: 'action', sortable: false, },
+          
         ],
-        data: [
-          {
-            colaborator: 'Frozen Yogurt',
-            area: 159,
-            cargo: 'BOB',
-            email: 'BOB',
-            action: 'lapis e xis'
-          },
-          {
-            colaborator: 'Ice cream sandwich',
-            area: 237,
-            cargo: 'BOB',
-            email: 'BOB',
-            action: 'lapis e xis'
-          },
-          {
-            colaborator: 'Eclair',
-            area: 262,
-            cargo: 'BOB',
-            email: 'BOB',
-            action: 'lapis e xis'
-          },
-          {
-            colaborator: 'Cupcake',
-            area: 305,
-            cargo: 'BOB',
-            email: 'BOB',
-            action: 'lapis e xis'
-          },
-          {
-            colaborator: 'Gingerbread',
-            area: 356,
-            cargo: 'BOB',
-            email: 'BOB',
-            action: 'lapis e xis'
-          },
-          {
-            colaborator: 'Jelly bean',
-            area: 375,
-            cargo: 'BOB',
-            email: 'BOB',
-            action: 'lapis e xis'
-          },
-          {
-            colaborator: 'Lollipop',
-            area: 392,
-            cargo: 'BOB',
-            email: 'BOB',
-            action: 'lapis e xis'
-          },
-          {
-            colaborator: 'Honeycomb',
-            area: 408,
-            cargo: 'BOB',
-            email: 'BOB',
-            action: 'lapis e xis'
-          },
-          {
-            colaborator: 'Donut',
-            area: 452,
-            cargo: 'BOB',
-            email: 'BOB',
-            action: 'lapis e xis'
-          },
-          {
-            colaborator: 'KitKat',
-            area: 518,
-            cargo: 'BOB',
-            email: 'BOB',
-            action: 'lapis e xis'
-          },
-        ],
+        data: []
+        ,
       }
     },
+    async created() {
+      this.dialogAddContributors = this.$store.state.showDialogCollaborator
+      try {
+        console.log(this.$router);
+        
+        const collaboratorsData = (await api.get("/companies/1Ig0FWZqjbANqiOiVUak/users",this.form)).data
+        console.log('colaboradores');
+        console.log(collaboratorsData);
+        this.data = collaboratorsData
+      } catch (error) {
+        console.error(error);
+        this.$store.dispatch("addAlert", {color: "error" , message: "Opss... Erro interno tente mais tarde"});
+      }
+    },
+    methods: {
+      closeDialog(){
+        this.dialogAddContributors = false
+        this.$store.dispatch("setShowDialogCollaborator", false)
+      },
+      navigateToOverview() {
+        router.push('home-business')
+      },
+      showDialog(){
+        this.dialogAddContributors = !this.dialogAddContributors
+      }
+    }
   }
 </script>
 

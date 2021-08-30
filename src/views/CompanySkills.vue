@@ -9,7 +9,10 @@
       :form="dialogEditSkillForm"
       @close="dialogEditSkill = false"
     />
-    <div class="skills__back-section" v-on:click="navigateToOverview()">
+    <div
+      class="skills__back-section"
+      @click="navigateToOverview()"
+    >
       <v-icon> mdi-arrow-left </v-icon>
       <span>Voltar para Overview</span>
     </div>
@@ -18,17 +21,19 @@
         <span>Skills: {{ companyName }}</span>
       </div>
       <div class="skills__button">
-        <v-btn color="primary" elevation="2" v-on:click="openAddSkillDialog()"
-          >Adicionar Skill</v-btn
+        <v-btn
+          color="primary"
+          elevation="2"
+          @click="openAddSkillDialog()"
         >
+          Adicionar Skill
+        </v-btn>
       </div>
     </div>
     <div class="skills__body-text">
-      <span
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi omnis
+      <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi omnis
         neque incidunt porro perspiciatis repudiandae illo quibusdam facere
-        quasi rem?</span
-      >
+        quasi rem?</span>
     </div>
     <div class="skills__table">
       <v-data-table
@@ -38,24 +43,62 @@
         class="elevation-1"
       >
         <template v-slot:[`item.action`]="{ item }">
-          <v-icon v-on:click="openEditSkillDialog(item)">mdi-pencil </v-icon>
-          <v-icon v-on:click="openDeleteDialog(item)" large
-            >mdi-alpha-x
+          <v-icon @click="openEditSkillDialog(item)">
+            mdi-pencil
+          </v-icon>
+          <v-icon
+            large
+            @click="openDeleteDialog(item)"
+          >
+            mdi-alpha-x
           </v-icon>
         </template>
       </v-data-table>
     </div>
+    <OrganismDialogAddSkills
+      :dialog="dialogAddSkills"
+      @close="closeDialog"
+    />
   </div>
 </template>
 <script>
   import OrganismDialogAddSkill from '../components/organisms/OrganismDialogAddSkill.vue';
   import OrganismDialogEditSkill from '../components/organisms/OrganismDialogEditSkill.vue';
+  import OrganismDialogAddSkills from "../components/organisms/OrganismDialogAddSkill.vue"
   import router from "../router";
   import api from "../api/axios"
   export default {
-    components: { OrganismDialogAddSkill, OrganismDialogEditSkill },
+    components: { OrganismDialogAddSkill, OrganismDialogEditSkill,OrganismDialogAddSkills },
+    data () {
+      return {
+        dialogAddSkills: false,
+        dialogAddSkill: false,
+        dialogEditSkill: false,
+        dialogEditSkillForm: {
+          name:'',
+          level:'',
+          description: '',
+          resource: [{name:'',description:'',link:''}],
+        },
+        companyName: "CIn",
+        headers: [
+          {
+            text: 'Skills',
+            align: 'start',
+            sortable: false,
+            value: 'skills',
+          },
+          { text: 'Descrição', value: 'description', sortable: false, },
+          { text: 'Recursos', value: 'recursos', sortable: false, },
+          { text: 'Tags', value: 'tags', sortable: false, },
+          
+        ],
+        data: [],
+      }
+    },
     
     async created() {
+      this.dialogAddSkills = this.$store.state.showDialogSkill
       const companiesData = await api.get("/skills")
       console.log(companiesData.data)
       this.data = [];
@@ -91,35 +134,13 @@
       })
       console.log(this.data)
     },
-    data () {
-      return {
-        dialogAddSkill: false,
-        dialogEditSkill: false,
-        dialogEditSkillForm: {
-          name:'',
-          level:'',
-          description: '',
-          resource: [{name:'',description:'',link:''}],
-        },
-        companyName: "CIn",
-        headers: [
-          {
-            text: 'Skills',
-            align: 'start',
-            sortable: false,
-            value: 'skills',
-          },
-          { text: 'Descrição', value: 'description', sortable: false, },
-          { text: 'Recursos', value: 'recursos', sortable: false, },
-          { text: 'Tags', value: 'tags', sortable: false, },
-          { text: 'Ações', value: 'action', sortable: false, },
-        ],
-        data: [],
-      }
-    },
     methods: {
+      closeDialog(){
+        this.dialogAddSkills = false
+        this.$store.dispatch("setShowDialogSkill", false)
+      },
       navigateToOverview() {
-        router.push('home')
+        router.push('home-business')
       },
       openAddSkillDialog() {
         this.dialogAddSkill = true;
@@ -130,6 +151,9 @@
         this.dialogEditSkillForm.description = skill.description
         // this.dialogEditSkillForm.name = skill.skills
         this.dialogEditSkill = true;
+      },
+      showDialog(){
+        this.dialogAddSkills = !this.dialogAddSkills
       }
     },
   }

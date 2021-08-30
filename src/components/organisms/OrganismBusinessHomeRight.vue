@@ -34,24 +34,18 @@
       :dialog="dialogAddSkill"
       @close="dialogAddSkill=false"
     />
-    <OrganismDialogAddContributors
-      :dialog="dialogAddContributors"
-      @close="dialogAddContributors=false"
-    />
   </v-row>
 </template>
 
 <script>
 import OrganismCardUpdatePlatform from "./OrganismCardUpdatePlatform.vue"
 import OrganismDialogAddSkill from "./OrganismDialogAddSkill.vue"
-import OrganismDialogAddContributors from "./OrganismDialogAddContributors.vue"
 import router from '../../router';
 export default {
   name: 'Home',
   components:{
     OrganismCardUpdatePlatform,
     OrganismDialogAddSkill,
-    OrganismDialogAddContributors
   },
 
   data: () => ({
@@ -83,15 +77,23 @@ export default {
   methods:{
     clickCard(card){
       console.log(card);
+      if(card.title == "Ver todos Colaboradores(as)" ){
+        console.log('add new colaborador');
+        this.$router.push("collaborators")
+        this.$store.dispatch("setShowDialogCollaborator", false)
+      }
       if(card.title == 'Adicionar Colaborador(a)'){
         console.log('add new colaborador');
-        this.dialogAddContributors = true
+        this.$router.push("collaborators")
+        this.$store.dispatch("setShowDialogCollaborator", true)
       }else if(card.title == 'Adicionar nova skill'){
         console.log('add new skill');
-        this.dialogAddSkill = true
+        this.$router.push("company-skills")
+        this.$store.dispatch("setShowDialogSkill", true)
       }else if(card.title == 'Ver todas as skills'){
         console.log("clicked")
         router.push('company-skills')
+        this.$store.dispatch("setShowDialogSkill", false)
       }
     }
   }
