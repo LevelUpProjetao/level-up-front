@@ -138,7 +138,7 @@
 <script>
 import MoleculeCardSkill from "../molecules/MoleculeCardSkill.vue"
 import api from "../../api/axios"
-  import router from "../../router";
+import router from "../../router"
 export default {
   name: 'OrganismMySkills',
   components:{

@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="mx-0 mb-5"
+    class="mx-0 mb-5 card-skill"
     max-width="286"
     max-height="105"
   >
@@ -73,6 +73,9 @@ export default {
 };
 </script>
 <style scoped>
+.card-skill {
+  cursor: pointer;
+}
 .styleButton{
     font-size: 11px;
 }

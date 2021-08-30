@@ -34,11 +34,11 @@
     </v-row>
     <v-row>
       <v-col
-        v-for="resourceId in skillInfo.resources"
-        :key="resourceId"
+        v-for="resource in resources"
+        :key="resource.id"
         cols="4"
       >
-        <molecule-ressource :resource-id="resourceId" />
+        <molecule-ressource :resource="resource" />
       </v-col>
     </v-row>
   </div>
@@ -54,6 +54,10 @@ export default {
     skillInfo: {
       type: Object,
       default: () => {}
+    },
+    resources: {
+      type: Array,
+      default: () => []
     }
   },
 }

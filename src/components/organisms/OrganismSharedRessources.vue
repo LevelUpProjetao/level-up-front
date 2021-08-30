@@ -28,18 +28,21 @@
     </v-row>
     <v-row>
       <v-col
-        v-for="resourceId in resources"
-        :key="resourceId"
+        v-for="resource in resources"
+        :key="resource.id"
         cols="4"
       >
-        <molecule-ressource :resource-id="resourceId" />
+        <molecule-ressource :resource="resource" />
       </v-col>
     </v-row>
     <v-dialog 
       v-model="openShareRessourceDialog"
       max-width="500"
     >
-      <molecule-share-ressource-dialog @close="closeShareRessourceDialog" />
+      <molecule-share-ressource-dialog
+        @save="createResource"
+        @close="closeShareRessourceDialog"
+      />
     </v-dialog>
   </div>
 </template>
@@ -47,6 +50,7 @@
 <script>
 import MoleculeRessource from '../molecules/MoleculeRessource.vue'
 import MoleculeShareRessourceDialog from '../molecules/MoleculeShareRessourceDialog.vue'
+import api from "../../api/axios"
 export default {
   components: {
     MoleculeRessource,
@@ -56,7 +60,11 @@ export default {
     resources: {
       type: Array,
       default: () => []
-    }
+    },
+    skillId: {
+      type: String,
+      default: () => ""
+    },
   },
   data: () => ({
     openShareRessourceDialog: false
@@ -67,6 +75,19 @@ export default {
     },
     closeShareRessourceDialog () {
       this.openShareRessourceDialog = false
+    },
+    async createResource (e) {
+      e.skill_id = this.skillId
+      console.log(e)
+      try {
+        await api.post('/resources', e);
+        this.openShareRessourceDialog = false;
+        this.$store.dispatch("addAlert", { color: "success" , message: "Seu recurso foi criado com sucesso." });
+        this.$emit('updateResource')
+      } catch (err) {
+        console.log(err)
+        this.$store.dispatch("addAlert", { color: "error" , message: "Algo deu errado na hora de criar o recurso." });
+      }
     }
   }
 
