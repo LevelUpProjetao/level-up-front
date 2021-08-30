@@ -1,21 +1,21 @@
 <template>
   <div class="first-access-card">
     <h1>
-      Oi, {{ collaboratorName }}!
+      Oi, {{ this.$store.state.user.name }}!
     </h1>
     <div class="first-access-subtitle">
       Vamos nos conhecer um pouquinho mais para te recomendarmos as skills que mais se encaixem com você.
     </div>
     <div>
       <v-text-field
-        v-model="years"
+        v-model="form.years_of_experience"
         label="Quantos anos de experiência na posição atual?"
         required
         outlined
       />
       <v-select
-        v-model="habilities"
-        :items="items"
+        v-model="form.achieved_tags"
+        :items="currentHabilities"
         label="Habilidades que já possui"
         multiple
         chips
@@ -23,8 +23,8 @@
         outlined
       />
       <v-select
-        v-model="whishes"
-        :items="items"
+        v-model="form.interested_tags"
+        :items="desiredHabilities"
         label="Habilidades que gostaria de ter"
         :rules="[v => !!v || 'Item is required']"
         multiple
@@ -33,7 +33,7 @@
         outlined
       />
       <v-checkbox
-        v-model="checkbox"
+        v-model="form.has_interest_in_outside_tags"
         class="first-access-checkbox"
         label="Quero conhecer sobre assuntos além da minha posição"
       />
@@ -41,15 +41,7 @@
     <div class="first-access-card-footer">
       <v-btn
         color="primary"
-        text
-        @click="dialog = false"
-      >
-        Fechar
-      </v-btn>
-      <v-spacer />
-      <v-btn
-        color="primary"
-        @click="dialog = false"
+        @click="saveUserInformation()"
       >
         Iniciar minha experiência
       </v-btn>
@@ -57,27 +49,44 @@
   </div>
 </template>
 <script>
-import router from "../router";
+import router from "../router"
+import api from "../api/axios"
 
 export default {
   name: "CollaboratorFirstAccess",
   data: () => ({
-    collaboratorName: "Jorge",
-    items: ["VueJS", "Objective C", "Python", "React"]
-  }),
-  methods: {
-      login() {
-          alert('Olhe o log e vc fez login')
-          this.$store.dispatch("setLogged", true);
-          // router.push("/home");
-      },
-      logout() {
-          alert('Olhe o log e vc fez login')
+    form: {
+      years_of_experience: null,
+      achieved_tags: [],
+      interested_tags: [],
+      has_interest_in_outside_tags: false
 
-          this.$store.dispatch("setLogged", false);
-          // router.push("/home");
-      }
+    },
+    currentHabilities: [],
+    desiredHabilities: [],
+  }),
+  async created() {
+    const tagsData = await api.get("/tags")
+    this.currentHabilities = tagsData.data.map(tag=> tag.name)
+    this.desiredHabilities = tagsData.data.map(tag=> tag.name)
   },
+  methods: {
+    async saveUserInformation(){
+      const user = this.$store.state.user
+      try {
+        const userData = await api.post(`/users/${user.email}/info`,this.form)
+        this.$store.dispatch("addAlert", {color: "success" , message: "Informações salvas com sucesso."})
+        this.$store.dispatch("setUser", {...user, isFirstLogin: false})
+        router.push("/home")
+
+      } catch (error) {
+        console.error(error);
+        this.$store.dispatch("addAlert", {color: "error" , message: "Opss... Erro interno, tente novamente mais tarde."})
+      }
+      
+
+    },
+  }
 };
 </script>
 

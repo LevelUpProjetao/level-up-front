@@ -16,8 +16,8 @@
         hide-delimiters
       >
         <v-carousel-item
-          v-for="(color) in colors"
-          :key="color"
+          v-for="(resource,index) in resources"
+          :key="index"
           class="pa-0 ma-0"
         >
           <v-sheet>
@@ -39,8 +39,8 @@
                 cols="9"
               >
                 <div style="width: 90%">
-                  <h3>Oratória</h3>
-                  <span style="width:20px">Jorge, Eng. Software, compartilhou um link em Vue para Mobile</span>
+                  <h3>{{ resource.skill_name }}</h3>
+                  <span style="width:20px">{{ resource.user_name }}, {{ resource.user_role || "ADM" }}, compartilhou um recurso em {{ resource.skill_tags[0] }}</span>
                   <div />
                 </div>
               </v-col>
@@ -67,25 +67,31 @@
 </template>
 
 <script>
-
+import api from "../../api/axios"
 import MoleculeUserPhoto from "../molecules/MoleculeUserPhoto.vue"
+import Vue from "vue"
 export default {
   name: 'OrganismNewResource',
   components:{
     MoleculeUserPhoto
   },
-
   data: () => ({
     value:12.5,
     model: 2,
-    colors: [
-        'primary',
-        'secondary',
-        'yellow darken-2',
-        'red',
-        'orange',
-      ],
+    resources: [],
   }),
+   async created(){
+     console.log('criando');
+    const last_resources = (await api.get(`/companies/1Ig0FWZqjbANqiOiVUak/last_resources`)).data
+    for (const resource of last_resources) {
+      console.log(resource.created_by);
+      const user = (await api.get(`/users/${resource.created_by}`)).data 
+      resource.user = user
+    }
+    console.log('last_resources');
+    console.log(last_resources);
+    this.resources = last_resources
+  },
   methods:{
     goToLogin(){
       router.push("/login");

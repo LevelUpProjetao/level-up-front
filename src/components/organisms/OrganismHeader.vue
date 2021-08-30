@@ -20,10 +20,10 @@
       v-if="this.$store.state.isLogged"
       class="centerElements mr-5"
     >
-      <MoleculeUserPhoto />
+      <MoleculeUserPhoto :url="$store.state.user.photo" />
       
       <h3 class="ml-3">
-        Jorge Antonio
+        {{ this.$store.state.user.name }}
       </h3>
 
       <button 
@@ -56,6 +56,7 @@ export default {
 
     logout() {
       this.$store.dispatch("setLogged", false);
+      this.$store.dispatch("setUser", null);
       this.goToLogin();
     }
   }

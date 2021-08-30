@@ -8,7 +8,7 @@
     >
       <v-col cols="auto">
         <h2 class="textTitle">
-          Minhas skills
+          {{ getTitle }}
         </h2>
       </v-col>
       <v-col
@@ -44,25 +44,40 @@
               </v-card-title>
 
               <v-card-text class="dialog-content">
-                <v-text-field
-                  v-model="title"
-                  label="Título da skill"
-                  required
-                  outlined
-                />
-                <v-select
-                  v-model="level"
-                  :items="items"
-                  :rules="[v => !!v || 'Item is required']"
-                  label="Nível"
-                  required
-                  outlined
-                />
-                <v-textarea
-                  outlined
-                  name="about"
-                  label="Fale mais sobre essa skill"
-                />
+                <v-form
+                  ref="form"
+                  v-model="valid"
+                  lazy-validation
+                >
+                  <v-text-field
+                    v-model="form.name"
+                    label="Título da skill"
+                    required
+                    outlined
+                    :rules="[
+                      v => !!v || 'A skill precisa de titulo',
+                      v => (v && v.length <= 20) || 'O titulo deve ter menos de 20 caracteres.',
+                    ]"
+                  />
+                  <v-select
+                    v-model="form.level"
+                    :items="items"
+                    :rules="[v => !!v || 'Selecione o nivel']"
+                    label="Nível"
+                    required
+                    outlined
+                  />
+                  <v-textarea
+                    v-model="form.description"
+                    outlined
+                    name="about"
+                    label="Fale mais sobre essa skill"
+                    required
+                    :rules="[
+                      v => !!v || 'Descreva um pouco a skill'
+                    ]"
+                  />
+                </v-form>
               </v-card-text>
 
               <v-divider />
@@ -78,7 +93,7 @@
                 <v-spacer />
                 <v-btn
                   color="primary"
-                  @click="dialog = false"
+                  @click="submitForm"
                 >
                   Adicionar
                 </v-btn>
@@ -89,51 +104,138 @@
       </v-col>
     </v-row>
     <v-row
-      v-if="true"
+      v-if="!viewCollaborator"
     >
-      <v-col
-        v-for="index in 6"
-        :key="index"
-        cols="4"
+      <v-row v-if="skillsLimited.length > 0">
+        <v-col
+          v-for="(skill, index) in skillsLimited"
+          :key="index"
+          cols="4"
+        >
+          <div @click="goToCourseDetails">
+            <MoleculeCardSkill :skill="skill" />
+          </div>
+        </v-col>
+      </v-row>
+
+      <v-row
+        v-else
+        no-gutters
+        class="mt-4"
       >
-        <MoleculeCardSkill />
-      </v-col>
+        <h3>Nenhuma skill adicionada até o momento.</h3>
+      </v-row>
     </v-row>
     <v-row v-else>
-      <v-col
-        v-for="index in 6"
-        :key="index"
-        cols="2"
-        md="4"
-        lg="2"
+      <v-row v-if="skillsLimited.length > 0">
+        <v-col
+          v-for="(skill, index) in skillsLimited"
+          :key="index"
+          cols="2"
+          md="4"
+          lg="2"
+        >
+          <div @click="goToCourseDetails(skill)">
+            <MoleculeCardSkill
+              :skill="skill"
+              @click="goToCourseDetails(skill)"
+            />
+          </div>
+        </v-col>
+      </v-row>
+      <v-row
+        v-else
+        no-gutters
+        class="mt-4 ml-8"
       >
-        <MoleculeCardSkill />
-      </v-col>
+        <h3>Nenhuma skill adicionada até o momento.</h3>
+      </v-row>
     </v-row>
+    <v-divider class="mt-8" />
   </div>
 </template>
 
 <script>
 import MoleculeCardSkill from "../molecules/MoleculeCardSkill.vue"
+import api from "../../api/axios"
+import router from "../../router"
 export default {
   name: 'OrganismMySkills',
   components:{
     MoleculeCardSkill
   },
   props:{
+    viewCollaborator: {
+      type: Boolean,
+      default: () => true
+    },
+    skills: {
+      type: Array,
+      default: () => []
+    },
     showButtons: {
       type: Boolean,
       default: () => true
     },
   },
-
   data: () => ({
     dialog: false,
-    items: ["Iniciante", "Intermediário", "Avançado"]
+    valid: false,
+    items: ["Iniciante", "Intermediário", "Avançado"],
+    form: {name: '', level: '',description:""}
   }),
+  computed:{
+    getTitle(){
+      return !this.viewCollaborator? "Olá " + this.$store.state.user.name : "Minhas Skills"
+    },
+    skillsLimited(){
+      if(Array.isArray(this.skills)){
+        let limit
+        if(!this.viewCollaborator){
+          return this.skills.slice(0,6)
+        }
+        else if(this.$vuetify.breakpoint.mdAndDown){
+          limit = 6
+        }else if(this.$vuetify.breakpoint.lgAndUp){
+          limit = 12
+        }
+        let array = this.skills.slice(0,limit)
+        console.log(array);
+        return array
+      }else{
+        return []
+      }
+    }
+  },
   methods:{
+    goToCourseDetails (skill) {
+      console.log(skill)
+      this.$router.push({
+        name: 'course',
+        params: { data: skill}
+      });
+    },
     goToLogin(){
       router.push("/login");
+    },
+    async submitForm() {
+      if (!this.$refs.form.validate()) {
+        return;
+      }
+      const values = {
+        name: this.form.name,
+        level: this.form.level,
+        description: this.form.description,
+        created_by: this.$store.state.user.id
+      };
+      try {
+        await api.post('/skills', values);
+        this.$emit("createItem")
+        this.dialog = false;
+        this.$store.dispatch("addAlert", { color: "success" , message: "Sua skill foi criada com sucesso." });
+      } catch (err) {
+        this.$store.dispatch("addAlert", { color: "error" , message: "Algo deu errado na hora de criar sua skill." });
+      }
     }
   }
 };

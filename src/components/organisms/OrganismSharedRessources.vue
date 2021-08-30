@@ -28,56 +28,66 @@
     </v-row>
     <v-row>
       <v-col
-        v-for="index in 10"
-        :key="index"
+        v-for="resource in resources"
+        :key="resource.id"
         cols="4"
       >
-        <div @click="openRessource">
-          <molecule-ressource />
-        </div>
+        <molecule-ressource :resource="resource" />
       </v-col>
     </v-row>
-    <v-dialog 
-      v-model="openRessourceDialog"
-      max-width="500"
-    >
-      <molecule-ressource-dialog @close="closeRessourceDialog" />
-    </v-dialog>
     <v-dialog 
       v-model="openShareRessourceDialog"
       max-width="500"
     >
-      <molecule-share-ressource-dialog @close="closeShareRessourceDialog" />
+      <molecule-share-ressource-dialog
+        @save="createResource"
+        @close="closeShareRessourceDialog"
+      />
     </v-dialog>
   </div>
 </template>
 
 <script>
 import MoleculeRessource from '../molecules/MoleculeRessource.vue'
-import MoleculeRessourceDialog from '../molecules/MoleculeRessourceDialog.vue'
 import MoleculeShareRessourceDialog from '../molecules/MoleculeShareRessourceDialog.vue'
+import api from "../../api/axios"
 export default {
   components: {
     MoleculeRessource,
-    MoleculeRessourceDialog,
     MoleculeShareRessourceDialog
   },
+  props:{
+    resources: {
+      type: Array,
+      default: () => []
+    },
+    skillId: {
+      type: String,
+      default: () => ""
+    },
+  },
   data: () => ({
-    openRessourceDialog: false,
     openShareRessourceDialog: false
   }),
   methods: {
-    openRessource () {
-      this.openRessourceDialog = true
-    },
-    closeRessourceDialog () {
-      this.openRessourceDialog = false
-    },
     openShareRessource () {
       this.openShareRessourceDialog = true
     },
     closeShareRessourceDialog () {
       this.openShareRessourceDialog = false
+    },
+    async createResource (e) {
+      e.skill_id = this.skillId
+      console.log(e)
+      try {
+        await api.post('/resources', e);
+        this.openShareRessourceDialog = false;
+        this.$store.dispatch("addAlert", { color: "success" , message: "Seu recurso foi criado com sucesso." });
+        this.$emit('updateResource')
+      } catch (err) {
+        console.log(err)
+        this.$store.dispatch("addAlert", { color: "error" , message: "Algo deu errado na hora de criar o recurso." });
+      }
     }
   }
 

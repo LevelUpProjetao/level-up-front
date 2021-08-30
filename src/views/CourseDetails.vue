@@ -1,5 +1,8 @@
 <template>
-  <v-row justify="space-between">
+  <v-row
+    v-if="resources"
+    justify="space-between"
+  >
     <v-col cols="12">
       <div
         class="skills__back-section"
@@ -12,12 +15,21 @@
       </div>
     </v-col>
     <v-col cols="8">
-      <organism-course class="mb-3" />
-      <organism-shared-ressources class="mb-3" />
-      <organism-tags />
+      <organism-course
+        class="mb-3"
+        :skill-info="skillInfo"
+        :resources="resources.initial_resources"
+      />
+      <organism-shared-ressources
+        class="mb-3"
+        :skill-id="skillInfo.id"
+        :resources="resources.shared_resources"
+        @updateResource="updateResource"
+      />
+      <organism-tags :tags="skillInfo.tags" />
     </v-col>
     <v-col cols="4">
-      <organism-simillar-skills />
+      <organism-simillar-skills :skill-id="skillInfo.id" />
     </v-col>
   </v-row>
 </template>
@@ -27,6 +39,8 @@ import OrganismCourse from '../components/organisms/OrganismCourse.vue'
 import OrganismSharedRessources from '../components/organisms/OrganismSharedRessources.vue'
 import OrganismTags from '../components/organisms/OrganismTags.vue'
 import OrganismSimillarSkills from '../components/organisms/OrganismSimillarSkills.vue'
+import api from "../api/axios"
+import router from "../router"
 
 export default {
   name: 'SimillarSkills',
@@ -37,11 +51,24 @@ export default {
   OrganismSimillarSkills
   },
   data: () => ({
-    //
+    skillInfo: null,
+    resources: null
   }),
+  async created() {
+    this.skillInfo = this.$route.params.data;
+    console.log(this.skillInfo);
+    if(this.skillInfo?.name){
+      this.resources = (await api.get(`/skills/${this.skillInfo?.name + ' | ' + this.skillInfo?.level}/resources`)).data
+    }
+},
   methods:{
     goToHome(){
       router.push("/home");
+    },
+    async updateResource () {
+      if(this.skillInfo?.name){
+        this.resources = (await api.get(`/skills/${this.skillInfo?.name + ' | ' + this.skillInfo?.level}/resources`)).data
+      }
     }
   }
 }

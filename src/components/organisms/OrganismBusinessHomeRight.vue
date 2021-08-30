@@ -12,7 +12,7 @@
             Atualizar plataforma
           </h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin convallis blandit orci at euismod.
+            Realize ações para adicionar/editar colaboradores e atualizar as skills da empresa.
           </p>
         </v-col>
       </v-row>
@@ -40,44 +40,60 @@
 <script>
 import OrganismCardUpdatePlatform from "./OrganismCardUpdatePlatform.vue"
 import OrganismDialogAddSkill from "./OrganismDialogAddSkill.vue"
+import router from '../../router';
 export default {
   name: 'Home',
   components:{
     OrganismCardUpdatePlatform,
-    OrganismDialogAddSkill
+    OrganismDialogAddSkill,
   },
 
   data: () => ({
     dialogAddSkill: false,
+    dialogAddContributors: false,
     cards: [
       {
         img: 'seeContributor.png',
         title: 'Ver todos Colaboradores(as)',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin convallis blandit orci at euismod.'
+        description: 'Visualize, edite e adicione colaboradores.'
       },
       {
         img: 'addCollaborator.png',
         title: 'Adicionar Colaborador(a)',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin convallis blandit orci at euismod.'
+        description: 'Adicione um novo colaborador para ter acesso a plataforma.'
       },
       {
         img: 'seeSkills.png',
         title: 'Ver todas as skills',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin convallis blandit orci at euismod.'
+        description: 'Visualize, edite e adicione skills para os seus colaboradores.'
       },
       {
         img: 'newSkill.png',
         title: 'Adicionar nova skill',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin convallis blandit orci at euismod.'
+        description: 'Adicione uma nova skill para os seus colaboradores.'
       }
     ]
   }),
   methods:{
     clickCard(card){
       console.log(card);
-      if(card.title == 'Adicionar nova skill'){
+      if(card.title == "Ver todos Colaboradores(as)" ){
+        console.log('add new colaborador');
+        this.$router.push("collaborators")
+        this.$store.dispatch("setShowDialogCollaborator", false)
+      }
+      if(card.title == 'Adicionar Colaborador(a)'){
+        console.log('add new colaborador');
+        this.$router.push("collaborators")
+        this.$store.dispatch("setShowDialogCollaborator", true)
+      }else if(card.title == 'Adicionar nova skill'){
         console.log('add new skill');
-        this.dialogAddSkill = true
+        this.$router.push("company-skills")
+        this.$store.dispatch("setShowDialogSkill", true)
+      }else if(card.title == 'Ver todas as skills'){
+        console.log("clicked")
+        router.push('company-skills')
+        this.$store.dispatch("setShowDialogSkill", false)
       }
     }
   }

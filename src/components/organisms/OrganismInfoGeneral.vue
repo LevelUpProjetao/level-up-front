@@ -7,11 +7,14 @@
       class="mt-2"
     >
       <v-col
-        v-for="index in 2"
+        v-for="(info,index) in infos"
         :key="index"
         cols="6"
       >
-        <MoleculeInfoGeneral />
+        <MoleculeInfoGeneral
+          :number="info.number"
+          :text="info.text"
+        />
       </v-col>
     </v-row>
   </div>
@@ -27,10 +30,9 @@ export default {
   },
 
   data: () => ({
-    //
+    infos: [{number:20, text: "Colaboradores"}, {number:4, text: "Recursos Colaboradores"}, {number:20, text: "Skills da empresa"}, {number:4, text: "Recursos da empresa"}]
   }),
   methods:{
   }
 };
 </script>
-

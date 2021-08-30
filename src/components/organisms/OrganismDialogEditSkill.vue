@@ -6,7 +6,7 @@
   >
     <v-card>
       <v-card-title class="text-h4 font-weight-bold lighten-2">
-        Adicionar skill
+        Editar skill
       </v-card-title>
 
       <v-card-text class="dialog-content">
@@ -88,7 +88,7 @@
         <v-select
           v-model="form.tags"
           :items="tags"
-          label="Tags"
+          label="Habilidades que já possui"
           multiple
           chips
           required
@@ -111,7 +111,7 @@
           color="primary"
           @click="addSkill"
         >
-          Adicionar
+          Salvar
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -129,16 +129,40 @@ export default {
       type: Boolean,
       default: false
     },
+    form: {
+      type: Object,
+    }
+    // skillName: {
+    //   type: String,
+    //   default: ''
+    // },
+    // level: {
+    //   type: String,
+    //   default: ''
+    // },
+    // description: {
+    //   type: String,
+    //   default: ''
+    // },
+    // resource: {
+    //   type: Array,
+    //   default: [{name:'',description:'',link:''}]
+    // },
+    // tags: {
+    //   type: Array,
+    //   default: []
+    // },
   },
   data: () => ({
     tags: [],
     level: ["Iniciante" , "Básico" , "Intermediário" , "Avançado"],
-    form: {name:'',level:'',description: '', resource: [{name:'',description:'',link:''}], tags: []}
+    // form: {name:'',level:'',description: '', resource: [{name:'',description:'',link:''}], tags: []}
   }),
   async created(){
-    this.form.created_by = this.$store.state.user?.email
     const tagsData = await api.get("/tags")
     this.tags = tagsData.data.map(tag=> tag.name)
+    console.log(this.skillName)
+    this.form.name = this.skillName;
     console.log(tagsData);
   },
   methods: {
@@ -154,7 +178,8 @@ export default {
         console.error(error);
         this.$store.dispatch("addAlert", {color: "error" , message: "Opss... Erro interno tente mais tarde"});
       }
-      this.$emit('close')
+      
+
     },
     addNewResource(){
       this.form.resource.push({name:'',description:'',link:''})

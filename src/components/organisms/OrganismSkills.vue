@@ -8,38 +8,42 @@
       align="center"
       align-content="center"
       justify="space-between"
+      class="skillsSectionHeader"
     >
       <v-col cols="auto">
-        <h2 class="textTitle">
-          Skills
-        </h2>
+        <h3 class="textTitle">
+          Skills Recomendadas
+        </h3>
       </v-col>
       <v-col cols="auto">
         <div>
           <v-btn
             text
             class="textSeeMore text-none"
+            @click="seeAllFunction"
           >
-            Ver todas
+            {{ !seeAll? "Ver todas" : "Ver menos" }}
           </v-btn>
         </div>
       </v-col>
     </v-row>
     <v-row
-      justify="center" 
+      justify="start" 
       no-gutters
       class="pt-4"
     >
       <v-col
-        v-for="index in 4"
+        v-for="(skill,index) in getSkill"
         :key="index"
-        cols="auto"
-        sm="auto"
-        md="auto"
+        cols="12"
+        sm="12"
+        md="12"
         lg="6"
         class="pa-0"
       >
-        <MoleculeCardSummarySkill />
+        <div @click="goToCourseDetails(skill)">
+          <MoleculeCardSummarySkill :skill="skill" />
+        </div>
       </v-col>
     </v-row>
   </div>
@@ -52,25 +56,48 @@ export default {
   components:{
     MoleculeCardSummarySkill
   },
+  props:{
+    skills: {
+      type: Array,
+      default: () => []
+    },
+  },
 
   data: () => ({
-    //
+    seeAll: false
   }),
+  computed: {
+    getSkill(){
+      if(this.seeAll){
+        return this.skills
+      }else{
+        return this.skills.slice(0,4)
+      }
+    }
+  },
   methods:{
+    seeAllFunction(){
+      this.seeAll = !this.seeAll
+    },
     goToLogin(){
       router.push("/login");
-    }
+    },
+    goToCourseDetails (skill) {
+      this.$router.push({
+        name: 'course',
+        params: { data: skill}
+      });
+    },
   }
 };
 </script>
 <style scoped>
+.skillsSectionHeader {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
 .textTitle{
-  font-size: 35px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 47px;
-  letter-spacing: 0em;
-
+  font-size: 25px;
 }
 .textSeeMore{
   font-style: normal;
