@@ -11,7 +11,9 @@ const initialState = () => ({
     testando: 'hello world',
     showAlert: false,
     messageAlert: "Sua skill foi criada",
-    colorAlert: "Sucess"
+    colorAlert: "Sucess",
+    showDialogCollaborator: false,
+    showDialogSkill: false,
 });
 
 Vue.use(Vuex);
@@ -40,6 +42,12 @@ export const store = new Vuex.Store({
         },
         addAlert(context, value){
             context.commit("updateAlert", value);
+        },
+        setShowDialogCollaborator(context,value){
+          context.commit("updateShowDialogCollaborator", value);
+        },
+        setShowDialogSkill(context,value){
+          context.commit("updateShowDialogSkill", value);
         }
     },
     //after call mutation
@@ -55,6 +63,12 @@ export const store = new Vuex.Store({
             state.messageAlert = value.message;
             state.colorAlert = value.color;
             state.showAlert = true
+        },
+        updateShowDialogCollaborator(state,value){
+          state.showDialogCollaborator = value
+        },
+        updateShowDialogSkill(state,value){
+          state.showDialogSkill = value
         }
     },
 });
