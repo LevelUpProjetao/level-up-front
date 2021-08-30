@@ -106,32 +106,52 @@
     <v-row
       v-if="!viewCollaborator"
     >
-      <v-col
-        v-for="(skill, index) in skillsLimited"
-        :key="index"
-        cols="4"
+      <v-row v-if="skillsLimited.length > 0">
+        <v-col
+          v-for="(skill, index) in skillsLimited"
+          :key="index"
+          cols="4"
+        >
+          <div @click="goToCourseDetails">
+            <MoleculeCardSkill :skill="skill" />
+          </div>
+        </v-col>
+      </v-row>
+
+      <v-row
+        v-else
+        no-gutters
+        class="mt-4"
       >
-        <div @click="goToCourseDetails">
-          <MoleculeCardSkill :skill="skill" />
-        </div>
-      </v-col>
+        <h3>Nenhuma skill adicionada até o momento.</h3>
+      </v-row>
     </v-row>
     <v-row v-else>
-      <v-col
-        v-for="(skill, index) in skillsLimited"
-        :key="index"
-        cols="2"
-        md="4"
-        lg="2"
+      <v-row v-if="skillsLimited.length > 0">
+        <v-col
+          v-for="(skill, index) in skillsLimited"
+          :key="index"
+          cols="2"
+          md="4"
+          lg="2"
+        >
+          <div @click="goToCourseDetails(skill)">
+            <MoleculeCardSkill
+              :skill="skill"
+              @click="goToCourseDetails(skill)"
+            />
+          </div>
+        </v-col>
+      </v-row>
+      <v-row
+        v-else
+        no-gutters
+        class="mt-4 ml-8"
       >
-        <div @click="goToCourseDetails(skill)">
-          <MoleculeCardSkill
-            :skill="skill"
-            @click="goToCourseDetails(skill)"
-          />
-        </div>
-      </v-col>
+        <h3>Nenhuma skill adicionada até o momento.</h3>
+      </v-row>
     </v-row>
+    <v-divider class="mt-8" />
   </div>
 </template>
 
@@ -210,6 +230,7 @@ export default {
       };
       try {
         await api.post('/skills', values);
+        this.$emit("createItem")
         this.dialog = false;
         this.$store.dispatch("addAlert", { color: "success" , message: "Sua skill foi criada com sucesso." });
       } catch (err) {

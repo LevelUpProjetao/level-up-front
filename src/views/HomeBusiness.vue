@@ -25,6 +25,13 @@ export default {
   data: () => ({
     //
   }),
+  created(){
+    console.log("AAAAAAAAAAA");
+    console.log(this.$store.state.user)
+    if(this.$store.state.user){
+      this.$router.push("/home");
+    }
+  },
   methods:{
     goToLogin(){
       router.push("/login");
